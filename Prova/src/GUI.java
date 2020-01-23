@@ -27,7 +27,7 @@ public class GUI extends JFrame {
 	public GUI(Driver drive) {
 		setForeground(new Color(255, 255, 0));
 		setResizable(false);
-		setTitle("DIRETTA GoAL") ;
+		setTitle("DIRETTA GOAL") ;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo2.png"));
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

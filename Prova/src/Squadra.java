@@ -57,7 +57,7 @@ public class Squadra extends JFrame{
 	public Squadra(Driver drive) {
 		setResizable(false);
 		setTitle("LIST SQUADRE") ;
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\logo2.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo2.png"));
 	
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,7 +110,7 @@ public class Squadra extends JFrame{
 				
 			}
 		});
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\back.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
 		lblNewLabel.setBounds(29, 252, 103, 64);
 		lblNewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		contentPane.add(lblNewLabel);

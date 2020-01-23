@@ -64,7 +64,7 @@ public class Partita extends JFrame{
 		
 		setResizable(false);
 		setTitle("LISTA MATCH") ;
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\logo2.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo2.png"));
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 816, 339);
@@ -110,7 +110,7 @@ public class Partita extends JFrame{
 				
 			}
 		});
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\back.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
 		lblNewLabel.setBounds(34, 188, 70, 64);
 		lblNewLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		contentPane.add(lblNewLabel);

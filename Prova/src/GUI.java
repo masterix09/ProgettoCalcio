@@ -27,8 +27,8 @@ public class GUI extends JFrame {
 	public GUI(Driver drive) {
 		setForeground(new Color(255, 255, 0));
 		setResizable(false);
-		setTitle("DIRETTA G2AL") ;
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\logo2.png"));
+		setTitle("DIRETTA GoAL") ;
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo2.png"));
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 722, 543);
@@ -40,7 +40,7 @@ public class GUI extends JFrame {
 		
 		JLabel label_1 = new JLabel("");
 		label_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_1.setIcon(new ImageIcon("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\logoleeds.png"));
+		label_1.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logoleeds.png"));
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -54,7 +54,7 @@ public class GUI extends JFrame {
 		contentPane.add(label_1);
 		
 		JLabel label_2 = new JLabel("");
-		label_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\calendario.png"));
+		label_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\calendario.png"));
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -79,7 +79,7 @@ public class GUI extends JFrame {
 			}
 		});
 		label_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_3.setIcon(new ImageIcon("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\trofeo.png"));
+		label_3.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\trofeo.png"));
 		label_3.setBounds(470, 155, 115, 115);
 		contentPane.add(label_3);
 		
@@ -94,7 +94,7 @@ public class GUI extends JFrame {
 			}
 		});
 		label_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_4.setIcon(new ImageIcon("C:\\Users\\power\\git\\atomHuni\\ProgettoOODB\\img\\upload.png"));
+		label_4.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\upload.png"));
 		label_4.setBounds(470, 313, 85, 72);
 		contentPane.add(label_4);
 		

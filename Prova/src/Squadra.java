@@ -132,7 +132,7 @@ try{
 			
 			//FINE CONNESSIONE DB
 			//INIZIO FORMULAZIONE QUERY
-			String Query = "Select * from  squadra";
+			String Query = "select  squadra.id_Team, squadra.Nome, squadra.Vinte, squadra.Pareggiate, squadra.Perse, squadra.Giocate, squadra.GF, squadra.GS, squadra.Punti, squadra.Presidente, allenatore.cognome AS Allenatore, squadra.Stadio from allenatore, squadra where squadra.Allenatore = allenatore.id_allenatore";
 			Statement smnt = connection.createStatement();
 			ResultSet rs = smnt.executeQuery( Query );
 			//FINE FORMULAZIONE QUERY	

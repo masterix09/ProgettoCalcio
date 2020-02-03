@@ -74,7 +74,7 @@ public class GUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				
+				drive.ShowClassifica();
 				
 			}
 		});

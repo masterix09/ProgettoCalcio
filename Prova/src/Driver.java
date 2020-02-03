@@ -4,12 +4,13 @@ public class Driver {
 
 	private Persona People;
 	private Giocatore Player;
-	private Squadra Team;	
 	private Stadio Stadium;
 	private Goal Gol;
-	private Partita Match;
 	private GUI gui;
-	private Aggiornamento Upload;
+	private Update Upload;
+	private Match Match;
+	private Team Team;
+	private Classifica Ranking;
 	
 	public static void main(String[] args) throws SQLException {
 		
@@ -41,16 +42,24 @@ public class Driver {
 	
 	public void ShowSquadre() {
 		
-		Squadra Team = new Squadra(this);
+		Team Team = new Team(this);
 		Team.setVisible(true);
 		
 		
 	}
 	
-	
+	public void ShowClassifica() {
+		
+		Classifica Ranking = new Classifica(this);
+		Ranking.setVisible(true);
+		
+		
+	}
+
+
 	public void ShowPartite() {
 		
-		Partita match = new Partita(this);
+		Match match = new Match(this);
 		match.setVisible(true);
 		
 	}
@@ -67,14 +76,22 @@ public class Driver {
 	
 	public void NotShowPartite() {
 		
-		Partita match = new Partita(this);
+		Match match = new Match(this);
 		match.setVisible(false);
+			
+	}
+	
+	
+	public void NotShowClassifica() {
+		
+		Classifica Ranking = new Classifica(this);
+		Ranking.setVisible(false);
 			
 	}
 	
 	public void NotShowSquadre() {
 		
-		Squadra Team = new Squadra(this);
+		Team Team = new Team(this);
 		Team.setVisible(false);
 			
 	}
@@ -89,14 +106,14 @@ public class Driver {
 		
 	public void ShowAggiorna() {
 		
-		Aggiornamento Upload = new Aggiornamento(this);
+		Update Upload = new Update(this);
 		Upload.setVisible(true);
 		
 	}
 	
 	
 	public void NotShowAggiorna() {
-		Aggiornamento Upload = new Aggiornamento(this);
+		Update Upload = new Update(this);
 		Upload.setVisible(false);
 		
 	}

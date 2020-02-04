@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -25,22 +26,79 @@ import java.awt.Color;
 
 public class Classifica extends JDialog {
 	private JTable table;
-
+	
 
 	public Classifica(Driver drive){
+		setTitle("CLASSIFICA");
 		
 		
-		setBounds(100, 100, 638, 378);
+		setBounds(100, 100, 915, 378);
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(15, 38, 568, 220);
+		scrollPane.setBounds(27, 45, 584, 230);
 		getContentPane().add(scrollPane);
+		
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(69, 45, 571, 230);
 		
 		
 		CreaTabella(scrollPane);
 		
 		drive.PopolaTabellaClassifica(table);
+		
+		
+		JButton btnChange = new JButton("CLASSIFICA SQUADRA");
+		btnChange.setVisible(false);
+		JButton CHANGE = new JButton("CLASSIFICA MARCATORI");
+		CHANGE.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
+				scrollPane.setVisible(false);
+				CHANGE.setVisible(false);
+				btnChange.setVisible(true);
+				scrollPane2.setVisible(true);
+
+				getContentPane().add(scrollPane2);
+				
+				CreaTabellaMarcatori(scrollPane2);
+				drive.PopolaTabellaMarcatori(table);
+				scrollPane2.setViewportView(table);
+				
+				
+					
+				
+			}
+		});
+		CHANGE.setBounds(653, 63, 201, 29);
+		getContentPane().add(CHANGE);
+		
+		
+		btnChange.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				scrollPane2.setVisible(false);
+				btnChange.setVisible(false);
+				CHANGE.setVisible(true);
+				scrollPane.setVisible(true);
+				getContentPane().add(scrollPane);
+				CreaTabella(scrollPane);
+				drive.PopolaTabellaClassifica(table);
+				scrollPane.setViewportView(table);
+				
+			}
+		});
+		btnChange.setBounds(655, 163, 223, 29);
+		getContentPane().add(btnChange);
+		
+		
+		
+		
+		
+		
 		
 	}
 	
@@ -61,7 +119,21 @@ public class Classifica extends JDialog {
 	
 	
 	
+	public void CreaTabellaMarcatori(JScrollPane scrollPane2) {
 		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null},
+			},
+			new String[] {
+				"NOME", "COGNOME", "GF", "SQUADRA"
+			}
+		));
+		scrollPane2.setViewportView(table);
+		
+	}
+	
 }
 	
 	

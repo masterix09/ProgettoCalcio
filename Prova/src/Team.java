@@ -26,6 +26,7 @@ public class Team extends JDialog {
 	private JTable table;
 
 	public Team(Driver drive) {
+		setTitle("LISTA SQUADRE");
 		setBounds(100, 100, 1038, 300);
 		
 			JScrollPane scrollPane = new JScrollPane();

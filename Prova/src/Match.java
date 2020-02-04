@@ -24,6 +24,7 @@ public class Match extends JDialog {
 	
 
 	public Match(Driver drive) {
+		setTitle("CALENDARIO");
 		setBounds(100, 100, 702, 313);	
 	
 			JScrollPane scrollPane = new JScrollPane();

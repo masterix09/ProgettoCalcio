@@ -126,14 +126,15 @@ public class Driver {
 	
 	
 	public int Connessione() {
-		int f = 0;
+		int f = 1;
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			String connectionString="jdbc:mysql://localhost:3306/serie_a?user=root&password=";
 			connection = DriverManager.getConnection(connectionString);
-			f = 1;
+			
 		}catch(Exception e){
 			System.out.println(e);
+			f = 0;
 		}  
 		
 		return f;
@@ -305,7 +306,63 @@ public class Driver {
 		
 	}
 	
+	public void PopulaTabellaMarcatori(JTable table) {
+		
+		
+		
+		
+	}
 	
+	
+	public void PopolaTabellaMarcatori(JTable table){
+		
+		
+		int f = Connessione();
+		if (f == 1) {
+		try{  
+			 
+			//INIZIO FORMULAZIONE QUERY
+			String Query = "SELECT giocatore.Nome, giocatore.Cognome, giocatore.n_goal, squadra.Nome AS Squadra from giocatore INNER JOIN squadra ON giocatore.Squadra = squadra.id_Team order by giocatore.n_goal desc";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			//FINE FORMULAZIONE QUERY	
+			
+			//Creo un oggetto JSON			
+			JSONObject jsonObject = new JSONObject();
+			
+		    //CREAZIONE TABELLA
+				DefaultTableModel dtm =(DefaultTableModel)table.getModel();
+				//SETTAGGIO ALLA RIGA NUMERO 0
+				dtm.setRowCount(0);
+		      
+		      
+			//Inserisco i valori di ritorno della query nell'oggetto JSON
+			 while(rs.next()) {
+				 
+		         JSONObject record = new JSONObject();
+		         //Inserting key-value pairs into the json object
+
+		         record.put("Nome", rs.getString("Nome"));
+		         record.put("Cognome", rs.getString("Cognome"));
+		         record.put("n_goal", rs.getInt("n_goal"));
+		         record.put("Squadra", rs.getString("Squadra"));
+
+		                
+		       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
+		         Object o[] = {record.get("Nome"), record.get("Cognome"), record.get("n_goal"), record.get("Squadra")};
+			  //AGGIUNGO RECORD ALLA TABELLA
+		         dtm.addRow(o);
+			 }		
+			
+		}catch(Exception e){
+			System.out.println(e);
+		} 
+		
+		}else {
+			System.out.println("Errore");
+		}
+	
+	}
 	
 	
 }

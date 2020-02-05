@@ -31,13 +31,17 @@ public class Classifica extends JDialog {
 	private JTable table;
 	private JButton btnChange;
 	private JButton CHANGE;
+
 	
 
 	public Classifica(Driver drive){
 		setTitle("CLASSIFICA");
 		
 		
+
 		setBounds(100, 100, 1058, 372);
+
+
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -49,6 +53,7 @@ public class Classifica extends JDialog {
 		scrollPane2.setBounds(69, 45, 571, 230);
 		
 		
+
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setVisible(false);
 		lblNome.setBounds(660, 216, 69, 20);
@@ -86,6 +91,7 @@ public class Classifica extends JDialog {
 		drive.PopolaTabellaClassifica(table);
 		
 		
+
 		btnChange = new JButton("CLASSIFICA SQUADRA");
 		btnChange.setVisible(false);
 		btnChange.addActionListener(new ActionListener() {
@@ -207,6 +213,7 @@ public class Classifica extends JDialog {
 		scrollPane2.setViewportView(table);
 		
 	}
+
 }
 	
 	

@@ -30,18 +30,12 @@ import javax.swing.ImageIcon;
 public class Classifica extends JDialog {
 	private JTable table;
 	private JButton btnChange;
-	private JButton CHANGE;
-
-	
+	private JButton CHANGE;	
 
 	public Classifica(Driver drive){
 		setTitle("CLASSIFICA");
 		
-		
-
 		setBounds(100, 100, 1058, 372);
-
-
 		getContentPane().setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -51,6 +45,37 @@ public class Classifica extends JDialog {
 		
 		JScrollPane scrollPane2 = new JScrollPane();
 		scrollPane2.setBounds(69, 45, 571, 230);
+		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setVisible(false);
+		lblNome.setBounds(660, 216, 69, 20);
+		getContentPane().add(lblNome);
+		
+		JLabel lblCognome = new JLabel("Cognome:");
+		lblCognome.setVisible(false);
+		lblCognome.setBounds(660, 169, 94, 20);
+		getContentPane().add(lblCognome);
+		
+		JLabel lblGoalFatti = new JLabel("Goal Fatti:");
+		lblGoalFatti.setVisible(false);
+		lblGoalFatti.setBounds(660, 252, 81, 20);
+		getContentPane().add(lblGoalFatti);
+		
+		JLabel label3 = new JLabel("");
+		label3.setVisible(true);
+		label3.setBounds(764, 252, 124, 20);
+		getContentPane().add(label3);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(754, 216, 124, 20);
+		getContentPane().add(label);
+		
+		JLabel label2 = new JLabel("");
+		label2.setBounds(771, 169, 124, 20);
+		getContentPane().add(label2);
+		
+		
+		
 		
 		
 
@@ -86,12 +111,74 @@ public class Classifica extends JDialog {
 		
 		
 		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setVisible(false);
+		lblNome.setBounds(660, 216, 69, 20);
+		getContentPane().add(lblNome);
+		
+		JLabel lblCognome = new JLabel("Cognome:");
+		lblCognome.setVisible(false);
+		lblCognome.setBounds(660, 169, 94, 20);
+		getContentPane().add(lblCognome);
+		
+		JLabel lblGoalFatti = new JLabel("Goal Fatti:");
+		lblGoalFatti.setVisible(false);
+		lblGoalFatti.setBounds(660, 252, 81, 20);
+		getContentPane().add(lblGoalFatti);
+		
+		JLabel label3 = new JLabel("");
+		label3.setVisible(true);
+		label3.setBounds(764, 252, 124, 20);
+		getContentPane().add(label3);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(754, 216, 124, 20);
+		getContentPane().add(label);
+		
+		JLabel label2 = new JLabel("");
+		label2.setBounds(771, 169, 124, 20);
+		getContentPane().add(label2);
+		
+		
+		
+		
+		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setVisible(false);
+		lblNome.setBounds(660, 216, 69, 20);
+		getContentPane().add(lblNome);
+		
+		JLabel lblCognome = new JLabel("Cognome:");
+		lblCognome.setVisible(false);
+		lblCognome.setBounds(660, 169, 94, 20);
+		getContentPane().add(lblCognome);
+		
+		JLabel lblGoalFatti = new JLabel("Goal Fatti:");
+		lblGoalFatti.setVisible(false);
+		lblGoalFatti.setBounds(660, 252, 81, 20);
+		getContentPane().add(lblGoalFatti);
+		
+		JLabel label3 = new JLabel("");
+		label3.setVisible(true);
+		label3.setBounds(764, 252, 124, 20);
+		getContentPane().add(label3);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(754, 216, 124, 20);
+		getContentPane().add(label);
+		
+		JLabel label2 = new JLabel("");
+		label2.setBounds(771, 169, 124, 20);
+		getContentPane().add(label2);
+		
+		
+			
+		
 		CreaTabella(scrollPane);
 		
 		drive.PopolaTabellaClassifica(table);
 		
 		
-
 		btnChange = new JButton("CLASSIFICA SQUADRA");
 		btnChange.setVisible(false);
 		btnChange.addActionListener(new ActionListener() {
@@ -213,7 +300,6 @@ public class Classifica extends JDialog {
 		scrollPane2.setViewportView(table);
 		
 	}
-
 }
 	
 	

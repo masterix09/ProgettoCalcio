@@ -80,7 +80,7 @@ public class GUI extends JFrame {
 		});
 		label_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		label_3.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\trofeo.png"));
-		label_3.setBounds(470, 155, 115, 115);
+		label_3.setBounds(446, 155, 115, 115);
 		contentPane.add(label_3);
 		
 		JLabel label_4 = new JLabel("");
@@ -107,7 +107,7 @@ public class GUI extends JFrame {
 		JLabel lblClassifica = new JLabel("CLASSIFICA");
 		lblClassifica.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		lblClassifica.setForeground(new Color(0, 0, 255));
-		lblClassifica.setBounds(464, 286, 121, 20);
+		lblClassifica.setBounds(446, 277, 121, 20);
 		contentPane.add(lblClassifica);
 		
 		JLabel lblCalendario = new JLabel("CALENDARIO");

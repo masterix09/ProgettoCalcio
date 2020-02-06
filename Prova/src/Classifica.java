@@ -31,6 +31,7 @@ public class Classifica extends JDialog {
 	private JTable table;
 	private JButton btnChange;
 	private JButton CHANGE;	
+	private JTable table_1;
 
 	public Classifica(Driver drive){
 		setTitle("CLASSIFICA");
@@ -45,34 +46,6 @@ public class Classifica extends JDialog {
 		
 		JScrollPane scrollPane2 = new JScrollPane();
 		scrollPane2.setBounds(69, 45, 571, 230);
-		
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setVisible(false);
-		lblNome.setBounds(660, 216, 69, 20);
-		getContentPane().add(lblNome);
-		
-		JLabel lblCognome = new JLabel("Cognome:");
-		lblCognome.setVisible(false);
-		lblCognome.setBounds(660, 169, 94, 20);
-		getContentPane().add(lblCognome);
-		
-		JLabel lblGoalFatti = new JLabel("Goal Fatti:");
-		lblGoalFatti.setVisible(false);
-		lblGoalFatti.setBounds(660, 252, 81, 20);
-		getContentPane().add(lblGoalFatti);
-		
-		JLabel label3 = new JLabel("");
-		label3.setVisible(true);
-		label3.setBounds(764, 252, 124, 20);
-		getContentPane().add(label3);
-		
-		JLabel label = new JLabel("");
-		label.setBounds(754, 216, 124, 20);
-		getContentPane().add(label);
-		
-		JLabel label2 = new JLabel("");
-		label2.setBounds(771, 169, 124, 20);
-		getContentPane().add(label2);
 		
 		
 			
@@ -95,12 +68,7 @@ public class Classifica extends JDialog {
 				CreaTabella(scrollPane);
 				drive.PopolaTabellaClassifica(table);
 				scrollPane.setViewportView(table);
-				lblNome.setVisible(false);
-				lblCognome.setVisible(false);
-				lblGoalFatti.setVisible(false);
-				label.setVisible(false);
-				label2.setVisible(false);
-				label3.setVisible(false);
+				
 				
 				
 			}
@@ -128,6 +96,25 @@ public class Classifica extends JDialog {
 				scrollPane2.setViewportView(table);
 				
 
+				JScrollPane scrollPane_1 = new JScrollPane();
+				scrollPane_1.setVisible(false);
+				scrollPane_1.setBounds(663, 108, 358, 192);
+				getContentPane().add(scrollPane_1);
+				
+				table_1 = new JTable();
+				table_1.setVisible(false);
+				table_1.setModel(new DefaultTableModel(
+					new Object[][] {
+						{null, null, null},
+					},
+					new String[] {
+						"Nome", "Cognome", "Partita"
+					}
+				));
+				scrollPane_1.setViewportView(table_1);
+				
+				
+				
 				table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 					
 					
@@ -135,15 +122,9 @@ public class Classifica extends JDialog {
 					public void valueChanged(ListSelectionEvent e) {
 						
 						
-						lblNome.setVisible(true);
-						lblCognome.setVisible(true);
-						lblGoalFatti.setVisible(true);
-						label.setVisible(true);
-						label2.setVisible(true);
-						label3.setVisible(true);
-						label.setText(table.getValueAt(table.getSelectedRow(), 0).toString());
-						label2.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
-						label3.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+						scrollPane_1.setVisible(true);
+						table_1.setVisible(true);
+						drive.PopolaTabellaListaVittimeGiocatore(table_1, table);
 						
 					}
 				});
@@ -154,6 +135,8 @@ public class Classifica extends JDialog {
 		});
 		CHANGE.setBounds(653, 63, 225, 29);
 		getContentPane().add(CHANGE);
+		
+		
 		
 		
 		
@@ -194,10 +177,10 @@ public class Classifica extends JDialog {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"NOME", "COGNOME", "GF", "SQUADRA"
+				"ID", "NOME", "COGNOME", "GF", "SQUADRA"
 			}
 		));
 		scrollPane2.setViewportView(table);

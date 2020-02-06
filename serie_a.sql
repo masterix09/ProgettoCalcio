@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 04, 2020 alle 12:34
+-- Creato il: Feb 06, 2020 alle 11:15
 -- Versione del server: 10.4.11-MariaDB
 -- Versione PHP: 7.2.26
 
@@ -108,9 +108,17 @@ CREATE TABLE `goal` (
   `id_Goal` varchar(6) NOT NULL,
   `Time` varchar(3) NOT NULL,
   `Autogol` tinyint(1) NOT NULL,
-  `Player` varchar(3) NOT NULL,
+  `Player` varchar(6) NOT NULL,
   `Partita` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `goal`
+--
+
+INSERT INTO `goal` (`id_Goal`, `Time`, `Autogol`, `Player`, `Partita`) VALUES
+('000001', '12', 0, 'NA0000', '001'),
+('000002', '10', 0, 'NA0001', '002');
 
 -- --------------------------------------------------------
 
@@ -274,7 +282,8 @@ ALTER TABLE `giocatore`
 -- Limiti per la tabella `goal`
 --
 ALTER TABLE `goal`
-  ADD CONSTRAINT `GOL-GAME` FOREIGN KEY (`Partita`) REFERENCES `partita` (`id_partita`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `GOL-GAME` FOREIGN KEY (`Partita`) REFERENCES `partita` (`id_partita`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `goal_ibfk_1` FOREIGN KEY (`Player`) REFERENCES `giocatore` (`id_giocatore`);
 
 --
 -- Limiti per la tabella `partita`

@@ -1,10 +1,38 @@
-import java.sql.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import org.json.simple.JSONArray;
+
+
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+
+import com.mysql.cj.xdevapi.JsonArray;
+import com.mysql.cj.xdevapi.JsonValue;
 
 public class Driver {
 
@@ -401,6 +429,63 @@ public class Driver {
 		
 	}
 	
+	
+	
+	
+	public void Update(File file) throws JSONException, ParseException, FileNotFoundException, IOException, SQLException {
+
+		int f = Connessione();
+		if(f == 1) {
+		
+		//ESTRAPOLAZIONE DATI DA UPDATE.JSON
+			
+			String path = ""+file.getPath()+"";
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(new FileReader(path));
+			org.json.simple.JSONObject jsonob = (org.json.simple.JSONObject)obj;
+			
+			String id = (String)jsonob.get("Id_partita");
+			System.out.print("ID partita: "+id+"\n");
+			
+			String Casa = (String)jsonob.get("Casa");
+			System.out.println("Casa: "+Casa+"\n");
+			
+			String Ospite = (String)jsonob.get("Ospite");
+			System.out.println("Ospite: "+Ospite+"\n");
+			
+			String Giornata = (String)jsonob.get("Giornata");
+			System.out.print("Giornata: "+Giornata+"\n");
+			
+			String Gol_C = (String)jsonob.get("Gol_C");
+			System.out.print("Goal Casa: "+Gol_C+"\n");
+			
+			String Gol_F = (String)jsonob.get("Gol_F");
+			System.out.print("Goal Ospite: "+Gol_F+"\n");
+			
+			String Arbitro = (String)jsonob.get("Arbitro");
+			System.out.print("Arbitro: "+Arbitro+"\n");
+			
+			
+			//SET VALUE IN DATABASE
+			
+			
+		    String Query = "insert into partita (id_partita, Casa, Ospite, Giornata, Gol_C, Gol_F, Arbitro) values (?, ?, ?, ?, ?, ?, ?)";
+
+		    PreparedStatement preparedStmt = connection.prepareStatement(Query);
+		      preparedStmt.setString(1, id);
+		      preparedStmt.setString(2, Casa);
+		      preparedStmt.setString(3, Ospite);
+		      preparedStmt.setString (4, Giornata);
+		      preparedStmt.setString(5, Gol_C);
+		      preparedStmt.setString(6, Gol_F);
+		      preparedStmt.setString(7, Arbitro);
+		      preparedStmt.execute();
+			
+			
+		}else{
+			System.out.println("Connessione al DB non riuscita");
+		}
+	}
 	
 }
 

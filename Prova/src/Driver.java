@@ -56,7 +56,7 @@ public class Driver {
 		
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
-			String connectionString="jdbc:mysql://localhost:3306/serie_a?user=root&password=";
+			String connectionString="jdbc:mysql://den1.mysql6.gear.host/seriea?user=seriea&password=Sj86RgD-3t-W";
 			connection = DriverManager.getConnection(connectionString);		
 		}catch(Exception e){
 			System.out.println(e);
@@ -121,7 +121,7 @@ public class Driver {
 		int f = 1;
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
-			String connectionString="jdbc:mysql://localhost:3306/serie_a?user=root&password=";
+			String connectionString="jdbc:mysql://den1.mysql6.gear.host/seriea?user=seriea&password=Sj86RgD-3t-W";
 			connection = DriverManager.getConnection(connectionString);
 			
 		}catch(Exception e){
@@ -325,7 +325,7 @@ public class Driver {
 						"INNER JOIN partita AS p\r\n" + 
 						"ON goal.Partita = p.id_partita\r\n" + 
 						"INNER JOIN squadra\r\n" + 
-						"ON goal.Squadra = Squadra.id_Team\r\n" + 
+						"ON goal.Squadra = squadra.id_Team\r\n" + 
 						"where p.id_partita = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );

@@ -160,10 +160,10 @@ public class Classifica extends JDialog {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
+				{null, null, null, null,null, null, null, null},
 			},
 			new String[] {
-				"SQUADRA", "PT", "GF", "GS"
+				"SQUADRA", "PT","GIOCATE","VINTE", "PERSE", "PAREGGIATE", "GF", "GS", 
 			}
 		));
 		scrollPane.setViewportView(table);

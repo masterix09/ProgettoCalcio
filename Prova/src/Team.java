@@ -49,14 +49,14 @@ public class Team extends JDialog {
 		table.setRowSelectionAllowed(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"id_Team", "Nome", "Vinte", "Pareggiate", "Perse", "Giocate", "GF", "GS", "Punti ", "Presidente", "Allenatore", "Stadio"
+				"id_Team", "Nome", "Presidente", "Allenatore", "Stadio"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false, false, false, true, true, true
+				false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -67,10 +67,7 @@ public class Team extends JDialog {
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setResizable(false);
-		table.getColumnModel().getColumn(5).setResizable(false);
-		table.getColumnModel().getColumn(6).setResizable(false);
-		table.getColumnModel().getColumn(7).setResizable(false);
-		table.getColumnModel().getColumn(8).setResizable(false);
+		
 		
 		scrollPane.setViewportView(table);
 	}

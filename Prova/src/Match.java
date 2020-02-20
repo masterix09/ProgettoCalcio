@@ -118,10 +118,23 @@ public class Match extends JDialog {
 					drive.PopolatabellaGoal(table_1, table);
 					
 					
+					table_1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+						
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							drive.NotShowPartite();
+							drive.ShowGiocatore();
+							
+						}
+					});
+				
+					
+					
 				}
 			});
 		
-		
+			
+
 	}
 	
 	
@@ -137,8 +150,14 @@ public class Match extends JDialog {
 			new String[] {
 				"GIORNATA", "CASA", "OSPITE", "GOAL CASA", "GOAL OSPITE", "ARBITRO"
 			}
-		));
-		
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);

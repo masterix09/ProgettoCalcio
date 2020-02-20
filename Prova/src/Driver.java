@@ -1,11 +1,8 @@
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,11 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONException;
@@ -25,8 +18,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import org.json.simple.JSONArray;
-
-
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -116,6 +107,15 @@ public class Driver {
 		Upload.setVisible(false);
 	}
 	
+	public void ShowGiocatore() {
+		Player = new Giocatore(this);
+		Player.setVisible(true);
+	}
+	
+	public void NotShowGiocatore() {
+		Player.setVisible(false);		
+	}
+	
 	
 	public int Connessione() {
 		int f = 1;
@@ -138,7 +138,7 @@ public class Driver {
 		if (f == 1) {
 			try{  
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "select  squadra.Nome, squadra.punti, squadra.GF, squadra.GS from squadra order by squadra.punti desc";
+				String Query = "select  squadra.Nome, squadra.punti, squadra.Giocate, squadra.Vinte, squadra.Pareggiate, squadra.Perse, squadra.GF, squadra.GS from squadra ORDER BY squadra.punti DESC, GF-GS ASC";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -154,10 +154,14 @@ public class Driver {
 			         //Inserting key-value pairs into the json object
 			         record.put("Nome", rs.getString("Nome"));
 			         record.put("Punti", rs.getInt("Punti"));
+			         record.put("Giocate", rs.getInt("Giocate"));
+			         record.put("Vinte", rs.getString("Vinte"));
+			         record.put("Pareggiate", rs.getInt("Pareggiate"));
+			         record.put("Perse", rs.getInt("Perse"));
 			         record.put("GF", rs.getInt("GF"));
 			         record.put("GS", rs.getInt("GS"));
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("Nome"), record.get("Punti"), record.get("GF"), record.get("GS")};
+			         Object o[] = {record.get("Nome"), record.get("Punti"), record.get("Giocate"), record.get("Vinte"), record.get("Pareggiate"), record.get("Perse"),record.get("GF"), record.get("GS")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 				 }		
@@ -221,12 +225,12 @@ public class Driver {
 		if (f == 1) {
 			try{  
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT partita.id_partita, s.Nome as Casa, s2.Nome AS Ospite, partita.Gol_C AS GoalCasa, partita.Gol_F as GoalOspite, partita.Arbitro\r\n" + 
+				String Query = "SELECT partita.Giornata, s.Nome as Casa, s2.Nome AS Ospite, partita.Gol_C AS GoalCasa, partita.Gol_F as GoalOspite, partita.Arbitro\r\n" + 
 						"FROM partita\r\n" + 
 						"INNER JOIN squadra as s\r\n" + 
 						"ON partita.Casa = s.id_Team\r\n" + 
 						"INNER JOIN squadra as s2\r\n" + 
-						"ON partita.Ospite = s2.id_Team";
+						"ON partita.Ospite = s2.id_Team ORDER BY partita.Giornata DESC";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -242,12 +246,12 @@ public class Driver {
 			         //Inserisco i valori nel record di tipo JSONObject
 			         record.put("Casa", rs.getString("Casa"));
 			         record.put("Ospite", rs.getString("Ospite"));
-			         record.put("id_partita", rs.getString("id_partita"));
+			         record.put("Giornata", rs.getString("Giornata"));
 			         record.put("Gol_C", rs.getInt("GoalCasa"));
 			         record.put("Gol_F", rs.getInt("GoalOspite"));
 			         record.put("Arbitro", rs.getString("Arbitro"));
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("id_partita"), record.get("Casa"), record.get("Ospite"), record.get("Gol_C"), record.get("Gol_F"), record.get("Arbitro")};
+			         Object o[] = {record.get("Giornata"), record.get("Casa"), record.get("Ospite"), record.get("Gol_C"), record.get("Gol_F"), record.get("Arbitro")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 			     }
@@ -466,11 +470,14 @@ public class Driver {
 			System.out.print("Arbitro: "+Arbitro+"\n");
 			
 			
-			//SET VALUE IN DATABASE
+			
+			
+			
+			//SET VALUE IN TABLE PARTITA
 			
 			
 		    String Query = "insert into partita (id_partita, Casa, Ospite, Giornata, Gol_C, Gol_F, Arbitro) values (?, ?, ?, ?, ?, ?, ?)";
-
+		    
 		    PreparedStatement preparedStmt = connection.prepareStatement(Query);
 		      preparedStmt.setString(1, id);
 		      preparedStmt.setString(2, Casa);
@@ -481,7 +488,17 @@ public class Driver {
 		      preparedStmt.setString(7, Arbitro);
 		      preparedStmt.execute();
 			
-			
+		    //SET VALUE IN TABLE GOAL
+		         
+		    ArrayList<String> arraygoal = new JSONArray();
+		    arraygoal = (ArrayList<String>) jsonob.get("goal");
+		   ArrayList<String> arrayid = new JSONArray();
+		  arrayid = (ArrayList<String>) jsonob.get("id");
+		   
+		    Object one = arraygoal.get(0);
+		    Object two = arrayid.get(0);
+		    System.out.println(one);
+		    
 		}else{
 			System.out.println("Connessione al DB non riuscita");
 		}

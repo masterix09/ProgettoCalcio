@@ -27,11 +27,12 @@ import com.mysql.cj.xdevapi.JsonValue;
 
 public class Driver {
 
+	private HomePage Home;
 	private Persona People;
 	private Giocatore Player;
 	private Stadio Stadium;
 	private Goal Gol;
-	private GUI gui;
+	private CampionatoHome CampionatoDialog;
 	private Update Upload;
 	private Match Match;
 	private Team Team;
@@ -43,7 +44,7 @@ public class Driver {
 	public static void main(String[] args) throws SQLException {
 		
 		Driver main = new Driver();
-		main.ShowGui();
+		main.ShowHomePage();
 		
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
@@ -75,9 +76,14 @@ public class Driver {
 		Match.setVisible(true);		
 	}
 
-	public void ShowGui() {
-		gui = new GUI(this);
-		gui.setVisible(true);
+	public void ShowCampionatoDialog() {
+		CampionatoDialog = new CampionatoHome(this);
+		CampionatoDialog.setVisible(true);
+		}
+	
+	public void ShowHomePage() {
+		Home = new HomePage(this);
+		Home.setVisible(true);
 		}
 	
 	public void NotShowPartite() {
@@ -94,10 +100,15 @@ public class Driver {
 	}
 	
 	
-	public void NotShowGui() {
-		gui.setVisible(false);	
+	public void NotShowCampionatoDialog() {
+		CampionatoDialog.setVisible(false);	
 	}
-		
+	
+	
+	public void NotShowHomePage() {
+		Home.setVisible(false);	
+	}
+	
 	public void ShowAggiorna() {
 		Upload = new Update(this);
 		Upload.setVisible(true);

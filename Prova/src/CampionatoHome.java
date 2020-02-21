@@ -11,6 +11,7 @@ import com.sun.prism.Image;
 import javafx.scene.layout.Pane;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -26,33 +27,30 @@ import java.io.IOException;
 import java.awt.Toolkit;
 import java.awt.Font;
 
-public class GUI extends JFrame {
+public class CampionatoHome extends JDialog {
 
 	private JPanel contentPane;
 	private Driver driver;
 	JLabel label;
 	
 	
-	public GUI(Driver drive) {
-		setForeground(new Color(255, 255, 0));
+	public CampionatoHome(Driver drive) {
+		
 		setResizable(false);
-		setTitle("DIRETTA GOAL") ;
+		setTitle("CAMPIONATO HOME");
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo2.png"));
 	
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 721, 543);
-		contentPane = new JPanel();
-		contentPane.setForeground(new Color(255, 255, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		
-		contentPane.setLayout(null);
+		setBounds(100, 100, 721, 543);
+		
+		
+		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 716, 503);
 		
-		contentPane.add(panel);
+		getContentPane().add(panel);
 		
 		panel.setLayout(null);		
 		JLabel label_1 = new JLabel("");

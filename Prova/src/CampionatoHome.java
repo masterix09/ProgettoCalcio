@@ -5,10 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.sun.prism.Graphics;
-import com.sun.prism.Image;
 
-import javafx.scene.layout.Pane;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -54,15 +51,15 @@ public class CampionatoHome extends JDialog {
 		
 		panel.setLayout(null);		
 		JLabel label_1 = new JLabel("");
-		label_1.setBounds(121, 35, 100, 100);
+		label_1.setBounds(0, 20, 209, 188);
 		panel.add(label_1);
 		label_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_1.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logoleeds.png"));
+		label_1.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\squadre.png"));
 		
 		JLabel label_2 = new JLabel("");
-		label_2.setBounds(29, 318, 242, 156);
+		label_2.setBounds(0, 316, 242, 156);
 		panel.add(label_2);
-		label_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\calendarioOFF.png"));
+		label_2.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\calendarioOFF.png"));
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -90,7 +87,7 @@ public class CampionatoHome extends JDialog {
 		label_3.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\trofeo.png"));
 		
 		JLabel label_4 = new JLabel("");
-		label_4.setBounds(439, 299, 277, 175);
+		label_4.setBounds(470, 299, 277, 175);
 		panel.add(label_4);
 		label_4.addMouseListener(new MouseAdapter() {
 			@Override
@@ -102,11 +99,11 @@ public class CampionatoHome extends JDialog {
 			}
 		});
 		label_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_4.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\DOWNLO.png"));
+		label_4.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\DOWNLO.png"));
 		
 		JLabel label_5 = new JLabel("");
 		label_5.setBounds(0, 0, 716, 503);
-		label_5.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\campoofFf.png"));
+		label_5.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\campoofFf.png"));
 		panel.add(label_5);
 		
 		

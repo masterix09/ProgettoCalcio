@@ -29,12 +29,6 @@ public class HomePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblScegliIlCampionato = new JLabel("SCEGLI IL CAMPIONATO");
-		lblScegliIlCampionato.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		lblScegliIlCampionato.setForeground(Color.BLUE);
-		lblScegliIlCampionato.setBounds(298, 349, 199, 20);
-		contentPane.add(lblScegliIlCampionato);
-		
 		JComboBox comboBox = new JComboBox();
 		try {
 			drive.AggiuntaItemCombo(comboBox);
@@ -51,22 +45,12 @@ public class HomePage extends JFrame {
 				
 			}
 		});
-		comboBox.setBounds(319, 378, 147, 26);
+		comboBox.setBounds(260, 394, 336, 56);
 		contentPane.add(comboBox);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("img\\logo off.png"));
-		lblNewLabel.setBounds(293, 182, 204, 180);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("img\\SCRITTA.png"));
-		lblNewLabel_1.setBounds(472, 238, 230, 143);
-		contentPane.add(lblNewLabel_1);
-		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("img\\rsz_backgroundhome.jpg"));
-		lblNewLabel_2.setBounds(0, 0, 917, 527);
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\rsz_backgroundhome.png"));
+		lblNewLabel_2.setBounds(0, 0, 903, 499);
 		contentPane.add(lblNewLabel_2);
 	}
 }

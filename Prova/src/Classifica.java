@@ -92,7 +92,7 @@ public class Classifica extends JDialog {
 				getContentPane().add(scrollPane2);
 				
 				CreaTabellaMarcatori(scrollPane2);
-				drive.PopolaTabellaMarcatori(table);
+				drive.PopolaTabellaMarcatori(table, item);
 				scrollPane2.setViewportView(table);
 				
 

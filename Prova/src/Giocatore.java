@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 public class Giocatore extends JDialog {
 
-	public Giocatore(Driver drive) {
+	public Giocatore(Driver drive, Object item) {
 		setTitle("DETTAGLI GIOCATORE");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);

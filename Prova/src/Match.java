@@ -34,7 +34,7 @@ public class Match extends JDialog {
 	private JTable table_1;
 	
 
-	public Match(Driver drive) {
+	public Match(Driver drive, Object item) {
 		setTitle("CALENDARIO");
 		setBounds(100, 100, 1121, 461);	
 			getContentPane().setLayout(null);
@@ -55,7 +55,7 @@ public class Match extends JDialog {
 			
 			CreaTabellaMatch(scrollPane);
 			
-			drive.PopolaTabellaMatch(table);
+			drive.PopolaTabellaMatch(table, item);
 			
 			//CHANGE COLOR, FONT HEADER 1ST JTABLE
 			JTableHeader header = table.getTableHeader();
@@ -123,7 +123,7 @@ public class Match extends JDialog {
 						@Override
 						public void valueChanged(ListSelectionEvent e) {
 							drive.NotShowPartite();
-							drive.ShowGiocatore();
+							
 							
 						}
 					});

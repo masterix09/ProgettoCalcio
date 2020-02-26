@@ -13,6 +13,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -31,18 +33,23 @@ public class Team extends JDialog {
 		getContentPane().setLayout(null);
 		
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(0, 0, 999, 228);
+			scrollPane.setBounds(0, 0, 1089, 244);
 			getContentPane().add(scrollPane);
 			
 					CreaTabella(scrollPane);
 					
 					drive.PopolaTabellaTeam(table, item);
 					
-					JLabel label = new JLabel(item.toString());
-					label.setBounds(1005, 56, 69, 20);
-					getContentPane().add(label);
-					
-
+					table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+						
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							drive.NotShowSquadre();
+							drive.ShowGiocatore(item);
+							
+							
+						}
+					});
 			
 		
 			
@@ -52,6 +59,7 @@ public class Team extends JDialog {
 	public void CreaTabella(JScrollPane scrollPane) {
 		
 		table = new JTable();
+		
 		table.setRowSelectionAllowed(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {

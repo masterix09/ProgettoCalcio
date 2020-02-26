@@ -73,8 +73,8 @@ public class Driver {
 		Ranking.setVisible(true);
 	}
 
-	public void ShowPartite() {
-		Match = new Match(this);
+	public void ShowPartite(Object item) {
+		Match = new Match(this, item);
 		Match.setVisible(true);		
 	}
 
@@ -87,6 +87,14 @@ public class Driver {
 		Home = new HomePage(this);
 		Home.setVisible(true);
 		}
+	
+	
+	
+	public void ShowGiocatore(Object item) {
+		Player = new Giocatore(this, item);
+		Player.setVisible(true);
+		
+	}
 	
 	public void NotShowPartite() {
 		Match.setVisible(false);
@@ -120,10 +128,7 @@ public class Driver {
 		Upload.setVisible(false);
 	}
 	
-	public void ShowGiocatore() {
-		Player = new Giocatore(this);
-		Player.setVisible(true);
-	}
+
 	
 	public void NotShowGiocatore() {
 		Player.setVisible(false);		
@@ -225,17 +230,19 @@ public class Driver {
 		
 	}
 
-	public void PopolaTabellaMatch(JTable table) {		
+	public void PopolaTabellaMatch(JTable table, Object item) {		
 		int f = Connessione();
 		if (f == 1) {
 			try{  
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT partita.Giornata, s.Nome as Casa, s2.Nome AS Ospite, partita.Gol_C AS GoalCasa, partita.Gol_F as GoalOspite, partita.Arbitro\r\n" + 
+				String Query = "SELECT partita.giornata, s.nome as Casa, s2.nome AS Ospite, partita.goal_casa AS GoalCasa, partita.goal_ospite as GoalOspite, partita.arbitro\r\n" + 
 						"FROM partita\r\n" + 
 						"INNER JOIN squadra as s\r\n" + 
-						"ON partita.Casa = s.id_Team\r\n" + 
+						"ON partita.casa = s.id\r\n" + 
 						"INNER JOIN squadra as s2\r\n" + 
-						"ON partita.Ospite = s2.id_Team ORDER BY partita.Giornata DESC";
+						"ON partita.ospite = s2.id \r\n" + 
+						"WHERE partita.campionato = (SELECT id from campionato where nome = '"+item.toString()+"')\r\n" + 
+						"ORDER BY partita.giornata DESC";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -269,13 +276,13 @@ public class Driver {
 			}
 	}
 	
-	public void PopolaTabellaMarcatori(JTable table){
+	public void PopolaTabellaMarcatori(JTable table, Object item){
 		int f = Connessione();
 		if (f == 1) {
 			try{  
 				 
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT giocatore.id_giocatore, giocatore.Nome, giocatore.Cognome, giocatore.n_goal, squadra.Nome AS Squadra from giocatore INNER JOIN squadra ON giocatore.Squadra = squadra.id_Team order by giocatore.n_goal desc";
+				String Query = "SELECT giocatore.id, giocatore.nome, giocatore.cognome, giocatore.ngoal, giocatore.nmaglia, squadra.nome AS Squadra from giocatore INNER JOIN squadra ON giocatore.squadra = squadra.id where squadra.campionato = (SELECT id from campionato where nome = '"+item.toString()+"') order by giocatore.ngoal desc";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -295,15 +302,16 @@ public class Driver {
 			         JSONObject record = new JSONObject();
 			         //Inserting key-value pairs into the json object
 	
-			         record.put("id_giocatore", rs.getString("id_giocatore"));
-			         record.put("Nome", rs.getString("Nome"));
-			         record.put("Cognome", rs.getString("Cognome"));
-			         record.put("n_goal", rs.getInt("n_goal"));
-			         record.put("Squadra", rs.getString("Squadra"));
+			         record.put("id", rs.getString("id"));
+			         record.put("nome", rs.getString("nome"));
+			         record.put("cognome", rs.getString("cognome"));
+			         record.put("ngoal", rs.getInt("ngoal"));
+			         record.put("nmaglia", rs.getInt("nmaglia"));
+			         record.put("squadra", rs.getString("squadra"));
 	
 			                
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("id_giocatore"), record.get("Nome"), record.get("Cognome"), record.get("n_goal"), record.get("Squadra")};
+			         Object o[] = {record.get("id"), record.get("nome"), record.get("cognome"), record.get("ngoal"), record.get("nmaglia"), record.get("squadra")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 				 }		
@@ -390,11 +398,11 @@ public class Driver {
 			try{  
 				 
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT giocatore.Nome, giocatore.Cognome, g.Partita\r\n" + 
+				String Query = "SELECT giocatore.nome, giocatore.cognome, g.partita\r\n" + 
 						"FROM giocatore\r\n" + 
 						"INNER JOIN goal AS g\r\n" + 
-						"ON giocatore.id_giocatore = g.Player\r\n" + 
-						"where g.Player = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
+						"ON giocatore.id = g.player\r\n" + 
+						"where g.player = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -415,14 +423,14 @@ public class Driver {
 			         //Inserting key-value pairs into the json object
 	
 			         
-			         record.put("Nome", rs.getString("Nome"));
-			         record.put("Cognome", rs.getString("Cognome"));
-			         record.put("Partita", rs.getInt("Partita"));
+			         record.put("nome", rs.getString("nome"));
+			         record.put("cognome", rs.getString("cognome"));
+			         record.put("partita", rs.getInt("partita"));
 			         
 	
 			                
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = { record.get("Nome"), record.get("Cognome"), record.get("Partita")};
+			         Object o[] = {record.get("nome"), record.get("cognome"), record.get("partita")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 				 }		

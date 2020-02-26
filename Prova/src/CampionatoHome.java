@@ -72,7 +72,7 @@ public class CampionatoHome extends JDialog {
 			public void mouseClicked(MouseEvent e) {
 				
 				
-				drive.ShowPartite();
+				drive.ShowPartite(item);
 				
 				
 			}
@@ -112,7 +112,7 @@ public class CampionatoHome extends JDialog {
 		
 		JLabel label_5 = new JLabel("");
 		label_5.setBounds(0, 10, 716, 504);
-		label_5.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\campoofFf.png"));
+		label_5.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\campoofFf.png"));
 		panel.add(label_5);
 		
 		

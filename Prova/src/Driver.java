@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,7 +50,7 @@ public class Driver {
 		
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
-			String connectionString="jdbc:mysql://den1.mysql6.gear.host/seriea?user=seriea&password=Sj86RgD-3t-W";
+			String connectionString="jdbc:mysql://den1.mysql1.gear.host/footballlea?user=footballlea&password=Zq10?s7AH2H!";
 			connection = DriverManager.getConnection(connectionString);		
 		}catch(Exception e){
 			System.out.println(e);
@@ -61,13 +63,13 @@ public class Driver {
 		
 	}
 	
-	public void ShowSquadre() {
-		Team = new Team(this);
+	public void ShowSquadre(Object item) {
+		Team = new Team(this, item);
 		Team.setVisible(true);
 	}
 	
-	public void ShowClassifica() {
-		Ranking = new Classifica(this);
+	public void ShowClassifica(Object item) {
+		Ranking = new Classifica(this, item);
 		Ranking.setVisible(true);
 	}
 
@@ -76,8 +78,8 @@ public class Driver {
 		Match.setVisible(true);		
 	}
 
-	public void ShowCampionatoDialog() {
-		CampionatoDialog = new CampionatoHome(this);
+	public void ShowCampionatoDialog(Object item) {
+		CampionatoDialog = new CampionatoHome(this, item);
 		CampionatoDialog.setVisible(true);
 		}
 	
@@ -132,7 +134,7 @@ public class Driver {
 		int f = 1;
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
-			String connectionString="jdbc:mysql://den1.mysql6.gear.host/seriea?user=seriea&password=Sj86RgD-3t-W";
+			String connectionString="jdbc:mysql://den1.mysql1.gear.host/footballlea?user=footballlea&password=Zq10?s7AH2H!";
 			connection = DriverManager.getConnection(connectionString);
 			
 		}catch(Exception e){
@@ -144,12 +146,12 @@ public class Driver {
 	}
 	
 	
-	public void PopolaTabellaClassifica(JTable table){
+	public void PopolaTabellaClassifica(JTable table, Object item){
 		int f = Connessione();
 		if (f == 1) {
 			try{  
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "select  squadra.Nome, squadra.punti, squadra.Giocate, squadra.Vinte, squadra.Pareggiate, squadra.Perse, squadra.GF, squadra.GS from squadra ORDER BY squadra.punti DESC, GF-GS ASC";
+				String Query = "select  squadra.Nome, squadra.punti, squadra.vinte, squadra.pareggio, squadra.perse, squadra.gf, squadra.gs from squadra where campionato =(SELECT id from campionato where nome = '"+item.toString()+"') ORDER BY squadra.punti DESC, GF-GS ASC";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -165,14 +167,13 @@ public class Driver {
 			         //Inserting key-value pairs into the json object
 			         record.put("Nome", rs.getString("Nome"));
 			         record.put("Punti", rs.getInt("Punti"));
-			         record.put("Giocate", rs.getInt("Giocate"));
-			         record.put("Vinte", rs.getString("Vinte"));
-			         record.put("Pareggiate", rs.getInt("Pareggiate"));
-			         record.put("Perse", rs.getInt("Perse"));
-			         record.put("GF", rs.getInt("GF"));
-			         record.put("GS", rs.getInt("GS"));
+			         record.put("vinte", rs.getString("vinte"));
+			         record.put("perse", rs.getInt("perse"));
+			         record.put("pareggio", rs.getInt("pareggio"));
+			         record.put("gf", rs.getInt("gf"));
+			         record.put("gs", rs.getInt("gs"));
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("Nome"), record.get("Punti"), record.get("Giocate"), record.get("Vinte"), record.get("Pareggiate"), record.get("Perse"),record.get("GF"), record.get("GS")};
+			         Object o[] = {record.get("Nome"), record.get("Punti"),record.get("vinte"),record.get("perse"), record.get("pareggio"), record.get("gf"), record.get("gs")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 				 }		
@@ -184,12 +185,12 @@ public class Driver {
 		}
 	}
 	
-	public void PopolaTabellaTeam(JTable table) {
+	public void PopolaTabellaTeam(JTable table, Object item) {
 		int f = Connessione();
 		if (f == 1) {
 		try{  
 			//INIZIO FORMULAZIONE QUERY
-			String Query = "select  squadra.id_Team, squadra.Nome, squadra.Vinte, squadra.Pareggiate, squadra.Perse, squadra.Giocate, squadra.GF, squadra.GS, squadra.Punti, squadra.Presidente, allenatore.cognome AS Allenatore, squadra.Stadio from allenatore, squadra where squadra.Allenatore = allenatore.id_allenatore";
+			String Query = "select  squadra.id, squadra.Nome, squadra.presidente, allenatore.cognome AS Allenatore, squadra.Stadio from allenatore, squadra where squadra.Allenatore = allenatore.id && squadra.campionato = (SELECT id from campionato where Nome='"+item.toString()+"')";
 			smnt = connection.createStatement();
 			rs = smnt.executeQuery( Query );
 			//FINE FORMULAZIONE QUERY	
@@ -203,20 +204,13 @@ public class Driver {
 			 while(rs.next()) {
 		         JSONObject record = new JSONObject();
 		         //Inserting key-value pairs into the json object
-		         record.put("id_Team", rs.getString("id_Team"));
+		         record.put("id", rs.getString("id"));
 		         record.put("Nome", rs.getString("Nome"));
-		         record.put("Vinte", rs.getInt("Vinte"));
-		         record.put("Pareggiate", rs.getInt("Pareggiate"));
-		         record.put("Perse", rs.getInt("Perse"));
-		         record.put("Giocate", rs.getInt("Giocate"));
-		         record.put("GF", rs.getInt("GF"));
-		         record.put("GS", rs.getInt("GS"));
-		         record.put("Punti", rs.getInt("Punti"));
 		         record.put("Presidente", rs.getString("Presidente"));
 		         record.put("Allenatore", rs.getString("Allenatore"));
 		         record.put("Stadio", rs.getString("Stadio"));       
 //		       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-		         Object o[] = { record.get("id_Team"), record.get("Nome"), record.get("Vinte"), record.get("Pareggiate"), record.get("Perse"), record.get("Giocate"), record.get("GF"), record.get("GS"), record.get("Punti"), record.get("Presidente"), record.get("Allenatore"), record.get("Stadio")};
+		         Object o[] = { record.get("id"), record.get("Nome"),record.get("Presidente"), record.get("Allenatore"), record.get("Stadio")};
 			  //AGGIUNGO RECORD ALLA TABELLA
 		         dtm.addRow(o);
 			}
@@ -459,62 +453,133 @@ public class Driver {
 			Object obj = parser.parse(new FileReader(path));
 			org.json.simple.JSONObject jsonob = (org.json.simple.JSONObject)obj;
 			
-			String id = (String)jsonob.get("Id_partita");
-			System.out.print("ID partita: "+id+"\n");
+		
+		
+			String id = (String)jsonob.get("id");
+			System.out.print("id: "+id+"\n");
 			
-			String Casa = (String)jsonob.get("Casa");
-			System.out.println("Casa: "+Casa+"\n");
+			String casa = (String)jsonob.get("casa");
+			System.out.println("casa: "+casa+"\n");
 			
-			String Ospite = (String)jsonob.get("Ospite");
-			System.out.println("Ospite: "+Ospite+"\n");
+			String ospite = (String)jsonob.get("ospite");
+			System.out.println("Ospite: "+ospite+"\n");
+						
+			String goal_casa = (String)jsonob.get("goal_casa");
+			System.out.print("Goal Casa: "+goal_casa+"\n");
 			
-			String Giornata = (String)jsonob.get("Giornata");
-			System.out.print("Giornata: "+Giornata+"\n");
+			String goal_ospite = (String)jsonob.get("goal_ospite");
+			System.out.print("Goal Ospite: "+goal_ospite+"\n");
 			
-			String Gol_C = (String)jsonob.get("Gol_C");
-			System.out.print("Goal Casa: "+Gol_C+"\n");
-			
-			String Gol_F = (String)jsonob.get("Gol_F");
-			System.out.print("Goal Ospite: "+Gol_F+"\n");
-			
-			String Arbitro = (String)jsonob.get("Arbitro");
-			System.out.print("Arbitro: "+Arbitro+"\n");
+			String giornata = (String)jsonob.get("giornata");
+			System.out.print("Giornata: "+giornata+"\n");
 			
 			
+			String campionato = (String)jsonob.get("campionato");
+			System.out.print("campionati: "+campionato+"\n");			
+			
+			String arbitro = (String)jsonob.get("arbitro");
+			System.out.print("arbitro: "+arbitro+"\n");
+			
+			String stadio = (String)jsonob.get("stadio");
+			System.out.print("stadio: "+stadio+"\n");			
+
 			
 			
 			
 			//SET VALUE IN TABLE PARTITA
 			
 			
-		    String Query = "insert into partita (id_partita, Casa, Ospite, Giornata, Gol_C, Gol_F, Arbitro) values (?, ?, ?, ?, ?, ?, ?)";
+		    String Query = "insert into partita (id, casa, ospite, goal_casa, goal_ospite, giornata, campionato, arbitro, stadio) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		    
 		    PreparedStatement preparedStmt = connection.prepareStatement(Query);
 		      preparedStmt.setString(1, id);
-		      preparedStmt.setString(2, Casa);
-		      preparedStmt.setString(3, Ospite);
-		      preparedStmt.setString (4, Giornata);
-		      preparedStmt.setString(5, Gol_C);
-		      preparedStmt.setString(6, Gol_F);
-		      preparedStmt.setString(7, Arbitro);
+		      preparedStmt.setString(2, casa);
+		      preparedStmt.setString(3, ospite);
+		      preparedStmt.setString (4, goal_casa);
+		      preparedStmt.setString(5, goal_ospite);
+		      preparedStmt.setString(6, giornata);
+		      preparedStmt.setString(7, campionato);
+		      preparedStmt.setString(8, arbitro);
+		      preparedStmt.setString(9, stadio);
 		      preparedStmt.execute();
+		
+			
 			
 		    //SET VALUE IN TABLE GOAL
 		         
-		    ArrayList<String> arraygoal = new JSONArray();
-		    arraygoal = (ArrayList<String>) jsonob.get("goal");
-		   ArrayList<String> arrayid = new JSONArray();
-		  arrayid = (ArrayList<String>) jsonob.get("id");
 		   
-		    Object one = arraygoal.get(0);
-		    Object two = arrayid.get(0);
-		    System.out.println(one);
+		      
+		      
+		      String id_goal = (String)jsonob.get("id_goal");
+				System.out.print("id_goal: "+id_goal+"\n");
+				
+				String autogol = (String)jsonob.get("autogol");
+				System.out.println("autogol: "+autogol+"\n");
+				
+				String time = (String)jsonob.get("time");
+				System.out.println("time: "+time+"\n");
+							
+				String partita = (String)jsonob.get("partita");
+				System.out.print("partita: "+partita+"\n");
+				
+				String player = (String)jsonob.get("player");
+				System.out.print("player: "+player+"\n");
+				
+				String squadra = (String)jsonob.get("squadra");
+				System.out.print("squadra: "+squadra+"\n");
+				
+				
+				String campionato2 = (String)jsonob.get("campionato");
+				System.out.print("campionato2: "+campionato2+"\n");			
+				
+				
+				
+				
+
+			    String Query2 = "insert into goal (id, autogol, time, partita, player, squadra, campionato) values (?, ?, ?, ?, ?, ?, ?)";
+			    
+			    PreparedStatement preparedStmt2 = connection.prepareStatement(Query2);
+			      preparedStmt2.setString(1, id_goal);
+			      preparedStmt2.setString(2, autogol);
+			      preparedStmt2.setString(3, time);
+			      preparedStmt2.setString (4, partita);
+			      preparedStmt2.setString(5, player);
+			      preparedStmt2.setString(6, squadra);
+			      preparedStmt2.setString(7, campionato2);
+			      preparedStmt2.execute();
+					
+		      
 		    
 		}else{
 			System.out.println("Connessione al DB non riuscita");
 		}
 	}
 	
+	
+	public void AggiuntaItemCombo(JComboBox comboBox) throws SQLException {
+		
+		int f = Connessione();
+		
+		if ( f==1) {
+			
+			
+			String Query = "select nome from campionato";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				
+				comboBox.addItem(rs.getString("nome"));
+				
+			}
+			
+		
+			
+		}else {
+			System.out.println("Errore connessione");
+		}
+	
+	}
 }
 
 

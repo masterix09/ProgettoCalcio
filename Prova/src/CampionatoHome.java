@@ -31,12 +31,15 @@ public class CampionatoHome extends JDialog {
 	JLabel label;
 	
 	
-	public CampionatoHome(Driver drive) {
+	public CampionatoHome(Driver drive, Object item) {
 		
 		setResizable(false);
 		setTitle("CAMPIONATO HOME");
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo2.png"));
+		
+	
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\logo2.png"));
 	
 		
 		setBounds(100, 100, 721, 543);
@@ -49,17 +52,21 @@ public class CampionatoHome extends JDialog {
 		
 		getContentPane().add(panel);
 		
-		panel.setLayout(null);		
+		panel.setLayout(null);	
+		
+		
+		
+		
 		JLabel label_1 = new JLabel("");
 		label_1.setBounds(0, 20, 209, 188);
 		panel.add(label_1);
 		label_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_1.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\squadre.png"));
+		label_1.setIcon(new ImageIcon("img\\squadre.png"));
 		
 		JLabel label_2 = new JLabel("");
 		label_2.setBounds(0, 316, 242, 156);
 		panel.add(label_2);
-		label_2.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\calendarioOFF.png"));
+		label_2.setIcon(new ImageIcon("img\\calendarioOFF.png"));
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -79,12 +86,12 @@ public class CampionatoHome extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				drive.ShowClassifica();
+				drive.ShowClassifica(item);
 				
 			}
 		});
 		label_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_3.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\trofeo.png"));
+		label_3.setIcon(new ImageIcon("img\\trofeo.png"));
 		
 		JLabel label_4 = new JLabel("");
 		label_4.setBounds(470, 299, 277, 175);
@@ -99,11 +106,16 @@ public class CampionatoHome extends JDialog {
 			}
 		});
 		label_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_4.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\DOWNLO.png"));
+		label_4.setIcon(new ImageIcon("img\\DOWNLO.png"));
+		
+		JLabel label_6 = new JLabel("");
+		label_6.setBounds(267, 452, 105, 20);
+		label_6.setText(item.toString());
+		panel.add(label_6);
 		
 		JLabel label_5 = new JLabel("");
 		label_5.setBounds(0, 0, 716, 503);
-		label_5.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\campoofFf.png"));
+		label_5.setIcon(new ImageIcon("img\\campoofFf.png"));
 		panel.add(label_5);
 		
 		
@@ -120,7 +132,7 @@ public class CampionatoHome extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				drive.ShowSquadre();
+				drive.ShowSquadre(item);
 				
 				
 			}

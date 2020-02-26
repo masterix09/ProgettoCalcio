@@ -25,16 +25,22 @@ public class Team extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 
-	public Team(Driver drive) {
+	public Team(Driver drive, Object item) {
 		setTitle("LISTA SQUADRE");
-		setBounds(100, 100, 1038, 300);
+		setBounds(100, 100, 1111, 300);
+		getContentPane().setLayout(null);
 		
 			JScrollPane scrollPane = new JScrollPane();
-			getContentPane().add(scrollPane, BorderLayout.CENTER);
+			scrollPane.setBounds(0, 0, 999, 228);
+			getContentPane().add(scrollPane);
 			
 					CreaTabella(scrollPane);
 					
-					drive.PopolaTabellaTeam(table);
+					drive.PopolaTabellaTeam(table, item);
+					
+					JLabel label = new JLabel(item.toString());
+					label.setBounds(1005, 56, 69, 20);
+					getContentPane().add(label);
 					
 
 			
@@ -71,9 +77,4 @@ public class Team extends JDialog {
 		
 		scrollPane.setViewportView(table);
 	}
-	
-	
-	
-	
-
 }

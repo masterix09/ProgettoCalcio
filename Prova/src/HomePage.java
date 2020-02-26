@@ -10,6 +10,9 @@ import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class HomePage extends JFrame {
 
@@ -33,21 +36,36 @@ public class HomePage extends JFrame {
 		contentPane.add(lblScegliIlCampionato);
 		
 		JComboBox comboBox = new JComboBox();
+		try {
+			drive.AggiuntaItemCombo(comboBox);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				Object item = comboBox.getSelectedItem();
+				drive.ShowCampionatoDialog(item);
+				
+			}
+		});
 		comboBox.setBounds(319, 378, 147, 26);
 		contentPane.add(comboBox);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo off.png"));
+		lblNewLabel.setIcon(new ImageIcon("img\\logo off.png"));
 		lblNewLabel.setBounds(293, 182, 204, 180);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\SCRITTA.png"));
+		lblNewLabel_1.setIcon(new ImageIcon("img\\SCRITTA.png"));
 		lblNewLabel_1.setBounds(472, 238, 230, 143);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\rsz_backgroundhome.jpg"));
+		lblNewLabel_2.setIcon(new ImageIcon("img\\rsz_backgroundhome.jpg"));
 		lblNewLabel_2.setBounds(0, 0, 917, 527);
 		contentPane.add(lblNewLabel_2);
 	}

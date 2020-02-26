@@ -42,13 +42,13 @@ public class CampionatoHome extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("img\\logo2.png"));
 	
 		
-		setBounds(100, 100, 721, 543);
+		setBounds(100, 100, 720, 541);
 		
 		
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 716, 503);
+		panel.setBounds(0, 0, 717, 515);
 		
 		getContentPane().add(panel);
 		
@@ -94,7 +94,7 @@ public class CampionatoHome extends JDialog {
 		label_3.setIcon(new ImageIcon("img\\trofeo.png"));
 		
 		JLabel label_4 = new JLabel("");
-		label_4.setBounds(470, 299, 277, 175);
+		label_4.setBounds(439, 297, 277, 175);
 		panel.add(label_4);
 		label_4.addMouseListener(new MouseAdapter() {
 			@Override
@@ -108,14 +108,11 @@ public class CampionatoHome extends JDialog {
 		label_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		label_4.setIcon(new ImageIcon("img\\DOWNLO.png"));
 		
-		JLabel label_6 = new JLabel("");
-		label_6.setBounds(267, 452, 105, 20);
-		label_6.setText(item.toString());
-		panel.add(label_6);
+		
 		
 		JLabel label_5 = new JLabel("");
-		label_5.setBounds(0, 0, 716, 503);
-		label_5.setIcon(new ImageIcon("img\\campoofFf.png"));
+		label_5.setBounds(0, 10, 716, 504);
+		label_5.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\campoofFf.png"));
 		panel.add(label_5);
 		
 		

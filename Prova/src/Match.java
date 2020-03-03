@@ -48,7 +48,7 @@ public class Match extends JDialog {
 
 			
 			getContentPane().add(label);
-	
+			JScrollPane scrollPane_1 = new JScrollPane();
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setBounds(31, 87, 646, 245);
 			getContentPane().add(scrollPane);
@@ -83,11 +83,11 @@ public class Match extends JDialog {
 					
 					
 					//VISUALIZZAZIONE SECONDA TABELLA
-					JScrollPane scrollPane_1 = new JScrollPane();
+		
 					
 					scrollPane_1.setBounds(550, 87, 500, 213);
-					scrollPane.setBounds(31, 87, 496, 241);
-					label.setBounds(29, 85, 501, 246);
+					scrollPane.setBounds(25, 87, 500, 241);
+					label.setBounds(25, 85, 501, 246);
 					
 					
 					getContentPane().add(scrollPane);
@@ -111,30 +111,10 @@ public class Match extends JDialog {
 				    header2.setFont(new Font("Tahoma", Font.BOLD,13));
 					
 					
-					
-					
-				    
-				   
 					drive.PopolatabellaGoal(table_1, table);
-					
-					
-					table_1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 						
-						@Override
-						public void valueChanged(ListSelectionEvent e) {
-							drive.NotShowPartite();
-							
-							
-						}
-					});
-				
-					
-					
 				}
 			});
-		
-			
-
 	}
 	
 	
@@ -145,14 +125,14 @@ public class Match extends JDialog {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"GIORNATA", "CASA", "OSPITE", "GOAL CASA", "GOAL OSPITE", "ARBITRO"
+				"ID", "GIORNATA", "CASA", "OSPITE", "GOAL CASA", "GOAL OSPITE", "ARBITRO"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false
+				false, false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -164,15 +144,10 @@ public class Match extends JDialog {
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setResizable(false);
 		table.getColumnModel().getColumn(5).setResizable(false);
+		table.getColumnModel().getColumn(6).setResizable(false);
 		
 		
 		scrollPane.setViewportView(table);
-		
-		
-		
-		
-		
-		
 		
 	}
 }

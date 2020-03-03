@@ -60,6 +60,15 @@ public class CampionatoHome extends JDialog {
 		JLabel label_1 = new JLabel("");
 		label_1.setBounds(0, 20, 209, 188);
 		panel.add(label_1);
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				drive.ShowSquadre(item);
+				
+				
+			}
+		});		
 		label_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		label_1.setIcon(new ImageIcon("img\\squadre.png"));
 		
@@ -125,15 +134,7 @@ public class CampionatoHome extends JDialog {
 		
 		
 		
-		label_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				drive.ShowSquadre(item);
-				
-				
-			}
-		});
+		
 		
 		
 		

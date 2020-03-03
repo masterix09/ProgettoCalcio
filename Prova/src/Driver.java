@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -90,8 +91,8 @@ public class Driver {
 	
 	
 	
-	public void ShowGiocatore(Object item) {
-		Player = new Giocatore(this, item);
+	public void ShowGiocatore(Object item, String id_giocatore) throws SQLException {
+		Player = new Giocatore(this, item, id_giocatore);
 		Player.setVisible(true);
 		
 	}
@@ -105,8 +106,8 @@ public class Driver {
 		Ranking.setVisible(false);
 	}
 	
-	public void NotShowSquadre() {
-		Team.setVisible(false);
+	public void NotShowSquadre(boolean flag) {
+		Team.setVisible(flag);
 	}
 	
 	
@@ -235,7 +236,7 @@ public class Driver {
 		if (f == 1) {
 			try{  
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT partita.giornata, s.nome as Casa, s2.nome AS Ospite, partita.goal_casa AS GoalCasa, partita.goal_ospite as GoalOspite, partita.arbitro\r\n" + 
+				String Query = "SELECT partita.id, partita.giornata, s.nome as Casa, s2.nome AS Ospite, partita.goal_casa AS GoalCasa, partita.goal_ospite as GoalOspite, partita.arbitro\r\n" + 
 						"FROM partita\r\n" + 
 						"INNER JOIN squadra as s\r\n" + 
 						"ON partita.casa = s.id\r\n" + 
@@ -256,6 +257,7 @@ public class Driver {
 				 while(rs.next()) {
 					 JSONObject record = new JSONObject();
 			         //Inserisco i valori nel record di tipo JSONObject
+					 record.put("id", rs.getString("id"));
 			         record.put("Casa", rs.getString("Casa"));
 			         record.put("Ospite", rs.getString("Ospite"));
 			         record.put("Giornata", rs.getString("Giornata"));
@@ -263,7 +265,7 @@ public class Driver {
 			         record.put("Gol_F", rs.getInt("GoalOspite"));
 			         record.put("Arbitro", rs.getString("Arbitro"));
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("Giornata"), record.get("Casa"), record.get("Ospite"), record.get("Gol_C"), record.get("Gol_F"), record.get("Arbitro")};
+			         Object o[] = {record.get("id"), record.get("Giornata"), record.get("Casa"), record.get("Ospite"), record.get("Gol_C"), record.get("Gol_F"), record.get("Arbitro")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 			     }
@@ -335,15 +337,7 @@ public class Driver {
 			try{  
 				 
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT g.Nome, g.Cognome, goal.Partita, squadra.Nome as Squadra, g.n_maglia, goal.Time\r\n" + 
-						"FROM goal \r\n" + 
-						"INNER JOIN giocatore AS g\r\n" + 
-						"ON goal.Player = g.id_giocatore\r\n" + 
-						"INNER JOIN partita AS p\r\n" + 
-						"ON goal.Partita = p.id_partita\r\n" + 
-						"INNER JOIN squadra\r\n" + 
-						"ON goal.Squadra = squadra.id_Team\r\n" + 
-						"where p.id_partita = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
+				String Query = "SELECT g.nome, g.cognome, goal.partita, squadra.nome as Squadra, g.nmaglia, goal.time FROM goal INNER JOIN giocatore AS g ON goal.player = g.id INNER JOIN partita AS p ON goal.partita = p.id INNER JOIN squadra ON goal.squadra = squadra.id where p.id = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -362,17 +356,18 @@ public class Driver {
 					 
 			         JSONObject record = new JSONObject();
 			         //Inserting key-value pairs into the json object
-	
-			         record.put("Nome", rs.getString("Nome"));
-			         record.put("Cognome", rs.getString("Cognome"));
-			         record.put("Partita", rs.getInt("Partita"));
-			         record.put("Squadra", rs.getString("Squadra"));
-			         record.put("n_maglia", rs.getInt("n_maglia"));
-			         record.put("Time", rs.getString("Time"));
+			         
+			         
+			         record.put("nome", rs.getString("nome"));
+			         record.put("cognome", rs.getString("cognome"));
+			         record.put("partita", rs.getInt("partita"));
+			         record.put("squadra", rs.getString("squadra"));
+			         record.put("nmaglia", rs.getInt("nmaglia"));
+			         record.put("time", rs.getString("time"));
 	
 			                
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("Nome"), record.get("Cognome"), record.get("Partita"), record.get("Squadra"), record.get("n_maglia"), rs.getObject("Time")};
+			         Object o[] = {record.get("nome"), record.get("cognome"), record.get("partita"), record.get("squadra"), record.get("nmaglia"), rs.getObject("time")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 				 }		
@@ -387,6 +382,55 @@ public class Driver {
 		
 	}
 	
+public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_squadra) throws SQLException {
+		
+		int f = Connessione();
+		
+		if(f == 1) {
+			try {
+			
+			String Query = "select giocatore.id, giocatore.nome, giocatore.cognome, squadra.nome as squadra from giocatore inner join squadra on giocatore.squadra = squadra.id where giocatore.squadra = '"+id_squadra+"'";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			//Creo un oggetto JSON			
+			JSONObject jsonObject = new JSONObject();
+			
+		    //CREAZIONE TABELLA
+				DefaultTableModel dtm =(DefaultTableModel)table_2.getModel();
+				//SETTAGGIO ALLA RIGA NUMERO 0
+				dtm.setRowCount(0);
+		      
+		      
+			//Inserisco i valori di ritorno della query nell'oggetto JSON
+			 while(rs.next()) {
+				 
+		         JSONObject record = new JSONObject();
+		         //Inserting key-value pairs into the json object
+
+		         record.put("id", rs.getString("id"));
+		         record.put("nome", rs.getString("nome"));
+		         record.put("cognome", rs.getString("cognome"));
+		         record.put("squadra", rs.getString("squadra"));
+		         
+
+		                
+		       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
+		         Object o[] = {record.get("id"), record.get("nome"), record.get("cognome"), record.get("squadra")};
+			  //AGGIUNGO RECORD ALLA TABELLA
+		         dtm.addRow(o);
+			 }		
+			
+		}catch(Exception e){
+			System.out.println(e);
+		} 
+			
+		}else {
+			System.out.println("Errore connessione");
+		}
+		
+		
+	}
 	
 	
 	public void PopolaTabellaListaVittimeGiocatore(JTable table, JTable table2) {
@@ -461,7 +505,12 @@ public class Driver {
 			Object obj = parser.parse(new FileReader(path));
 			org.json.simple.JSONObject jsonob = (org.json.simple.JSONObject)obj;
 			
-		
+			
+			
+			String id_goal = "", autogol ="", time="", player="", squadra="", partita="", campionato2="";
+			
+			
+		//ESTRAZIONE DATI DELLA PARTITA
 		
 			String id = (String)jsonob.get("id");
 			System.out.print("id: "+id+"\n");
@@ -513,48 +562,78 @@ public class Driver {
 		
 			
 			
-		    //SET VALUE IN TABLE GOAL
+		    //ESTRAZIONE DATI DEI GOAL
 		         
 		   
+		      JSONArray jsonArray = (JSONArray) jsonob.get("goal");
+		         System.out.println("");
+		         System.out.println("Contact details: ");
+		         //Iterating the contents of the array
+		         Iterator iterator = jsonArray.iterator();
+		         org.json.simple.JSONObject slide = (org.json.simple.JSONObject) iterator.next();
+		         String Query2 = "insert into goal (id, autogol, time, partita, player, squadra, campionato) values (?, ?, ?, ?, ?, ?, ?)";
+		         PreparedStatement preparedStmt2 = connection.prepareStatement(Query2);
+//		         while(iterator.hasNext()) {
+		        	 
+		         
+		         JSONArray c = (JSONArray) jsonob.get("goal");
+		         for (int i = 0 ; i < c.size(); i++) {
+		             org.json.simple.JSONObject obj2 = (org.json.simple.JSONObject) c.get(i);
+		             id_goal = (String) obj2.get("id_goal");
+		             autogol = (String) obj2.get("autogol");
+		             time  = (String) obj2.get("time");
+		             partita = (String) obj2.get("partita");
+		             player = (String) obj2.get("player");
+		             squadra = (String) obj2.get("squadra");
+		             campionato2 = (String) obj2.get("campionato");
+		             System.out.println(id_goal + " " + autogol + " " + time+ " "+partita+ " "+player+ " "+squadra+" "+campionato2+" ");
+					  preparedStmt2.setString(1, id_goal);
+				      preparedStmt2.setString(2, autogol);
+				      preparedStmt2.setString(3, time);
+				      preparedStmt2.setString (4, partita);
+				      preparedStmt2.setString(5, player);
+				      preparedStmt2.setString(6, squadra);
+				      preparedStmt2.setString(7, campionato2);
+				      preparedStmt2.execute();
+		         }
 		      
-		      
-		      String id_goal = (String)jsonob.get("id_goal");
-				System.out.print("id_goal: "+id_goal+"\n");
-				
-				String autogol = (String)jsonob.get("autogol");
-				System.out.println("autogol: "+autogol+"\n");
-				
-				String time = (String)jsonob.get("time");
-				System.out.println("time: "+time+"\n");
-							
-				String partita = (String)jsonob.get("partita");
-				System.out.print("partita: "+partita+"\n");
-				
-				String player = (String)jsonob.get("player");
-				System.out.print("player: "+player+"\n");
-				
-				String squadra = (String)jsonob.get("squadra");
-				System.out.print("squadra: "+squadra+"\n");
-				
-				
-				String campionato2 = (String)jsonob.get("campionato");
-				System.out.print("campionato2: "+campionato2+"\n");			
-				
-				
-				
-				
+		         
+//		        	    
+//				       id_goal =(String) slide.get("id_goal");
+//						System.out.print("id_goal: "+id_goal+"\n");
+//						
+//						 autogol = (String)slide.get("autogol");
+//						System.out.println("autogol: "+autogol+"\n");
+//						
+//						 time = (String)slide.get("time");
+//						System.out.println("time: "+time+"\n");
+//									
+//						 partita = (String)slide.get("partita");
+//						System.out.print("partita: "+partita+"\n");
+//						
+//						 player = (String)slide.get("player");
+//						System.out.print("player: "+player+"\n");
+//						
+//						 squadra = (String)slide.get("squadra");
+//						System.out.print("squadra: "+squadra+"\n");
+//						
+//						
+//						campionato2 = (String)slide.get("campionato");
+//						System.out.print("campionato2: "+campionato2+"\n");			
+//						
+//						
+//						
 
-			    String Query2 = "insert into goal (id, autogol, time, partita, player, squadra, campionato) values (?, ?, ?, ?, ?, ?, ?)";
-			    
-			    PreparedStatement preparedStmt2 = connection.prepareStatement(Query2);
-			      preparedStmt2.setString(1, id_goal);
-			      preparedStmt2.setString(2, autogol);
-			      preparedStmt2.setString(3, time);
-			      preparedStmt2.setString (4, partita);
-			      preparedStmt2.setString(5, player);
-			      preparedStmt2.setString(6, squadra);
-			      preparedStmt2.setString(7, campionato2);
-			      preparedStmt2.execute();
+					      
+//		            System.out.println(iterator.next());
+//		            
+//		            
+//		         }
+		      
+		      
+		      
+		  
+			      
 					
 		      
 		    
@@ -588,6 +667,143 @@ public class Driver {
 		}
 	
 	}
+	
+
+	
+
+	public byte[] immagine(Object item, String id_giocatore) throws SQLException {
+		
+		byte[] img = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.foto, squadra.campionato FROM giocatore INNER JOIN squadra on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				
+				img = rs.getBytes("foto");
+				
+			}
+			
+			
+		}else {
+			System.out.println("Errore connessione");
+		}
+		
+		
+		
+		return img;
+		
+	}
+
+
+	
+	public String Nome(Object item, String id_giocatore) throws SQLException {
+		String nome = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.nome FROM giocatore INNER JOIN squadra on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				
+				nome = rs.getString("nome");
+				
+			}
+			
+			
+			
+		}else {
+			System.out.println("Errore connessione");
+		}	
+		
+		return nome;
+		
+	}
+	
+	
+	public String Cognome(Object item, String id_giocatore) throws SQLException {
+		String cognome = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.cognome FROM giocatore INNER JOIN squadra on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				
+				cognome = rs.getString("cognome");
+				
+			}
+			
+			
+			
+		}else {
+			System.out.println("Errore connessione");
+		}	
+		
+		return cognome;
+		
+	}
+	
+	
+	public String NGoal(Object item, String id_giocatore) throws SQLException {
+		String ngoal = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.ngoal FROM giocatore INNER JOIN squadra on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				
+				ngoal = rs.getString("ngoal");
+				
+			}
+			
+			
+			
+		}else {
+			System.out.println("Errore connessione");
+		}	
+		
+		return ngoal;
+		
+	}
+	
+	
+	public String Squadra(Object item, String id_giocatore) throws SQLException {
+		String squadra = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.squadra FROM giocatore INNER JOIN squadra on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				
+				squadra = rs.getString("squadra");
+				
+			}
+			
+			
+			
+		}else {
+			System.out.println("Errore connessione");
+		}	
+		
+		return squadra;
+		
+	}
+	
+	
+	
+	
 }
-
-

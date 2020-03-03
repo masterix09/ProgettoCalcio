@@ -136,23 +136,7 @@ public class Classifica extends JDialog {
 		CHANGE.setBounds(653, 63, 225, 29);
 		getContentPane().add(CHANGE);
 		
-		
-		
-		
-		
-		
-		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			
 	}
 	
 	public void CreaTabella(JScrollPane scrollPane) {

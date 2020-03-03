@@ -40,12 +40,12 @@ public class Team extends JDialog {
 		id_giocatore = "";
 		
 		setTitle("LISTA SQUADRE");
-		setBounds(100, 100, 1111, 300);
+		setBounds(100, 100, 1210, 402);
 		getContentPane().setLayout(null);
 		
 			JScrollPane scrollPane = new JScrollPane();
 			JScrollPane scrollPane2 = new JScrollPane();
-			scrollPane.setBounds(0, 0, 1089, 244);
+			scrollPane.setBounds(36, 82, 1089, 244);
 			getContentPane().add(scrollPane);
 			
 					CreaTabella(scrollPane);
@@ -64,7 +64,7 @@ public class Team extends JDialog {
 									
 									id_squadra = model.getValueAt(index, 0).toString();
 									
-									scrollPane2.setBounds(0, 0, 1089, 244);
+									scrollPane2.setBounds(36, 82, 1089, 244);
 									scrollPane.setVisible(false);
 									getContentPane().add(scrollPane2);
 									scrollPane2.setVisible(true);

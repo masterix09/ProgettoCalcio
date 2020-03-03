@@ -573,7 +573,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		         org.json.simple.JSONObject slide = (org.json.simple.JSONObject) iterator.next();
 		         String Query2 = "insert into goal (id, autogol, time, partita, player, squadra, campionato) values (?, ?, ?, ?, ?, ?, ?)";
 		         PreparedStatement preparedStmt2 = connection.prepareStatement(Query2);
-//		         while(iterator.hasNext()) {
+
 		        	 
 		         
 		         JSONArray c = (JSONArray) jsonob.get("goal");
@@ -598,44 +598,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		         }
 		      
 		         
-//		        	    
-//				       id_goal =(String) slide.get("id_goal");
-//						System.out.print("id_goal: "+id_goal+"\n");
-//						
-//						 autogol = (String)slide.get("autogol");
-//						System.out.println("autogol: "+autogol+"\n");
-//						
-//						 time = (String)slide.get("time");
-//						System.out.println("time: "+time+"\n");
-//									
-//						 partita = (String)slide.get("partita");
-//						System.out.print("partita: "+partita+"\n");
-//						
-//						 player = (String)slide.get("player");
-//						System.out.print("player: "+player+"\n");
-//						
-//						 squadra = (String)slide.get("squadra");
-//						System.out.print("squadra: "+squadra+"\n");
-//						
-//						
-//						campionato2 = (String)slide.get("campionato");
-//						System.out.print("campionato2: "+campionato2+"\n");			
-//						
-//						
-//						
 
-					      
-//		            System.out.println(iterator.next());
-//		            
-//		            
-//		         }
-		      
-		      
-		      
-		  
-			      
-					
-		      
 		    
 		}else{
 			System.out.println("Connessione al DB non riuscita");

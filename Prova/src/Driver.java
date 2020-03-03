@@ -40,6 +40,7 @@ public class Driver {
 	private Match Match;
 	private Team Team;
 	private Classifica Ranking;
+	private Login Log;
 	private static Connection connection;
 	private ResultSet rs;
 	private Statement smnt;
@@ -47,7 +48,7 @@ public class Driver {
 	public static void main(String[] args) throws SQLException {
 		
 		Driver main = new Driver();
-		main.ShowHomePage();
+		main.ShowLogin();
 		
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
@@ -62,6 +63,12 @@ public class Driver {
 	public Driver() {
 		
 		
+	}
+	
+	
+	public void ShowLogin() {
+		Log = new Login(this);
+		Log.setVisible(true);
 	}
 	
 	public void ShowSquadre(Object item) {
@@ -79,13 +86,13 @@ public class Driver {
 		Match.setVisible(true);		
 	}
 
-	public void ShowCampionatoDialog(Object item) {
-		CampionatoDialog = new CampionatoHome(this, item);
+	public void ShowCampionatoDialog(Object item, String user, String pass) {
+		CampionatoDialog = new CampionatoHome(this, item, user, pass);
 		CampionatoDialog.setVisible(true);
 		}
 	
-	public void ShowHomePage() {
-		Home = new HomePage(this);
+	public void ShowHomePage(String user, String pass) {
+		Home = new HomePage(this, user, pass);
 		Home.setVisible(true);
 		}
 	
@@ -97,6 +104,12 @@ public class Driver {
 		
 	}
 	
+	
+	public void NotShowLogin() {
+		Log.setVisible(false);
+	}
+	
+	
 	public void NotShowPartite() {
 		Match.setVisible(false);
 	}
@@ -106,8 +119,8 @@ public class Driver {
 		Ranking.setVisible(false);
 	}
 	
-	public void NotShowSquadre(boolean flag) {
-		Team.setVisible(flag);
+	public void NotShowSquadre() {
+		Team.setVisible(false);
 	}
 	
 	
@@ -504,81 +517,70 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(new FileReader(path));
 			org.json.simple.JSONObject jsonob = (org.json.simple.JSONObject)obj;
-			
-			
-			
-			String id_goal = "", autogol ="", time="", player="", squadra="", partita="", campionato2="";
-			
-			
-		//ESTRAZIONE DATI DELLA PARTITA
-		
-			String id = (String)jsonob.get("id");
-			System.out.print("id: "+id+"\n");
-			
-			String casa = (String)jsonob.get("casa");
-			System.out.println("casa: "+casa+"\n");
-			
-			String ospite = (String)jsonob.get("ospite");
-			System.out.println("Ospite: "+ospite+"\n");
-						
-			String goal_casa = (String)jsonob.get("goal_casa");
-			System.out.print("Goal Casa: "+goal_casa+"\n");
-			
-			String goal_ospite = (String)jsonob.get("goal_ospite");
-			System.out.print("Goal Ospite: "+goal_ospite+"\n");
-			
-			String giornata = (String)jsonob.get("giornata");
-			System.out.print("Giornata: "+giornata+"\n");
-			
-			
-			String campionato = (String)jsonob.get("campionato");
-			System.out.print("campionati: "+campionato+"\n");			
-			
-			String arbitro = (String)jsonob.get("arbitro");
-			System.out.print("arbitro: "+arbitro+"\n");
-			
-			String stadio = (String)jsonob.get("stadio");
-			System.out.print("stadio: "+stadio+"\n");			
+
+			String id="", casa="", ospite="", goal_casa="", goal_ospite="", giornata="", campionato="", arbitro="", stadio="";
+			String id_goal = "", autogol ="", time="", player="", squadra="", partita="", campionato2="";			
 
 			
 			
+			JSONArray jsonArray = (JSONArray) jsonob.get("partite");
+		    System.out.println("");
+		    System.out.println("Partite details: ");
+		    //Iterating the contents of the array
+		    Iterator iterator = jsonArray.iterator();
+		    org.json.simple.JSONObject slide = (org.json.simple.JSONObject) iterator.next();
 			
-			//SET VALUE IN TABLE PARTITA
-			
-			
+			//INSERT INTO PARTITA
 		    String Query = "insert into partita (id, casa, ospite, goal_casa, goal_ospite, giornata, campionato, arbitro, stadio) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		    
-		    PreparedStatement preparedStmt = connection.prepareStatement(Query);
-		      preparedStmt.setString(1, id);
-		      preparedStmt.setString(2, casa);
-		      preparedStmt.setString(3, ospite);
-		      preparedStmt.setString (4, goal_casa);
-		      preparedStmt.setString(5, goal_ospite);
-		      preparedStmt.setString(6, giornata);
-		      preparedStmt.setString(7, campionato);
-		      preparedStmt.setString(8, arbitro);
-		      preparedStmt.setString(9, stadio);
-		      preparedStmt.execute();
+			  PreparedStatement preparedStmt = connection.prepareStatement(Query);
+			
+			  //ESTRAPOLAZIONE DATI PARTITE
+			 JSONArray c = (JSONArray) jsonob.get("partite");
+	         for (int i = 0 ; i < c.size(); i++) {
+	             org.json.simple.JSONObject obje = (org.json.simple.JSONObject) c.get(i);
+	             id = (String) obje.get("id");
+	             casa = (String) obje.get("casa");
+	             ospite  = (String) obje.get("ospite");
+	             goal_casa = (String) obje.get("goal_casa");
+	             goal_ospite = (String) obje.get("goal_ospite");
+	             giornata = (String) obje.get("giornata");
+	             campionato = (String) obje.get("campionato");
+	             arbitro = (String) obje.get("arbitro");
+	             stadio = (String) obje.get("stadio");
+	             System.out.println(id + " " + casa + " " + ospite+ " "+goal_casa+ " "+goal_ospite+ " "+giornata+" "+campionato+" "+arbitro+" "+stadio+" ");            
+			      preparedStmt.setString(1, id);
+			      preparedStmt.setString(2, casa);
+			      preparedStmt.setString(3, ospite);
+			      preparedStmt.setString (4, goal_casa);
+			      preparedStmt.setString(5, goal_ospite);
+			      preparedStmt.setString(6, giornata);
+			      preparedStmt.setString(7, campionato);
+			      preparedStmt.setString(8, arbitro);
+			      preparedStmt.setString(9, stadio);
+			      preparedStmt.execute();
+	         }
+			
+		
+		 
 		
 			
 			
-		    //ESTRAZIONE DATI DEI GOAL
-		         
-		   
-		      JSONArray jsonArray = (JSONArray) jsonob.get("goal");
+		    //CREAZIONE JSONARRAY GOAL
+		      JSONArray jsonArray2 = (JSONArray) jsonob.get("goal");
 		         System.out.println("");
 		         System.out.println("Contact details: ");
 		         //Iterating the contents of the array
-		         Iterator iterator = jsonArray.iterator();
-		         org.json.simple.JSONObject slide = (org.json.simple.JSONObject) iterator.next();
+		         Iterator iterator2 = jsonArray2.iterator();
+		         org.json.simple.JSONObject slide2 = (org.json.simple.JSONObject) iterator2.next();
+		         
+		   //INSERT INTO GOAL    
 		         String Query2 = "insert into goal (id, autogol, time, partita, player, squadra, campionato) values (?, ?, ?, ?, ?, ?, ?)";
 		         PreparedStatement preparedStmt2 = connection.prepareStatement(Query2);
 
-		        	 
-		         
-		         JSONArray c = (JSONArray) jsonob.get("goal");
-		         for (int i = 0 ; i < c.size(); i++) {
-		             org.json.simple.JSONObject obj2 = (org.json.simple.JSONObject) c.get(i);
+		  //ESTRAPOLAZIONE DATI GOAL
+		         JSONArray c2 = (JSONArray) jsonob.get("goal");
+		         for (int i2 = 0 ; i2 < c2.size(); i2++) {
+		             org.json.simple.JSONObject obj2 = (org.json.simple.JSONObject) c2.get(i2);
 		             id_goal = (String) obj2.get("id_goal");
 		             autogol = (String) obj2.get("autogol");
 		             time  = (String) obj2.get("time");
@@ -619,6 +621,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			
 			while(rs.next()) {
 				
+				//AGGIUNTA DI ITEM ALLA COMBOBOX PER OGNI CAMPIONATO PRESENTE
 				comboBox.addItem(rs.getString("nome"));
 				
 			}
@@ -646,6 +649,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			
 			while(rs.next()) {
 				
+				//ACQUISIZIONE DELL'IMMAGINE DAL DB
 				img = rs.getBytes("foto");
 				
 			}
@@ -674,6 +678,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			
 			while(rs.next()) {
 				
+				//ESTRAPOLAIZONE NOME
 				nome = rs.getString("nome");
 				
 			}
@@ -699,7 +704,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			rs = smnt.executeQuery( Query );
 			
 			while(rs.next()) {
-				
+				//ESTRAPOLAIZONE COGNOME
 				cognome = rs.getString("cognome");
 				
 			}
@@ -715,17 +720,21 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 	}
 	
 	
-	public String NGoal(Object item, String id_giocatore) throws SQLException {
+	public String NGoal(String id_giocatore) throws SQLException {
 		String ngoal = null;
 		int f = Connessione();
 		if(f == 1) {
 			
-			String Query = "SELECT giocatore.ngoal FROM giocatore INNER JOIN squadra on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
+			String Query = "SELECT COUNT(g.player) as ngoal\r\n" + 
+					"FROM giocatore as gi INNER JOIN goal as g\r\n" + 
+					"ON gi.id = g.player\r\n" + 
+					"where g.player = '"+id_giocatore+"'";
 			smnt = connection.createStatement();
 			rs = smnt.executeQuery( Query );
 			
 			while(rs.next()) {
 				
+				//ESTRAPOLAIZONE NGOAL
 				ngoal = rs.getString("ngoal");
 				
 			}
@@ -751,7 +760,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			rs = smnt.executeQuery( Query );
 			
 			while(rs.next()) {
-				
+				//ESTRAPOLAIZONE SQUADRA
 				squadra = rs.getString("squadra");
 				
 			}

@@ -17,9 +17,10 @@ import java.awt.event.ActionEvent;
 public class HomePage extends JFrame {
 
 	private JPanel contentPane;
-
-	
-	public HomePage(Driver drive) {
+	private JComboBox comboBox;
+	private JLabel lblNewLabel_2;
+	public HomePage(Driver drive, String user, String pass) {
+		
 		setResizable(false);
 		setTitle("DIRETTA GOAL");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +30,8 @@ public class HomePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
+		
+		comboBox = new JComboBox();
 		try {
 			drive.AggiuntaItemCombo(comboBox);
 		} catch (SQLException e) {
@@ -41,15 +43,15 @@ public class HomePage extends JFrame {
 				
 				
 				Object item = comboBox.getSelectedItem();
-				drive.ShowCampionatoDialog(item);
+				drive.ShowCampionatoDialog(item, user, pass);
 				
 			}
 		});
 		comboBox.setBounds(260, 394, 336, 56);
 		contentPane.add(comboBox);
 		
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("img\\rsz_backgroundhome.png"));
+		 lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\rsz_backgroundhome.png"));
 		lblNewLabel_2.setBounds(0, 0, 903, 499);
 		contentPane.add(lblNewLabel_2);
 	}

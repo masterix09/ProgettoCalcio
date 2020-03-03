@@ -33,6 +33,9 @@ public class Team extends JDialog {
 	private int index2;
 	private String id_squadra;
 	private String id_giocatore;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane2;
+	
 	public Team(Driver drive, Object item) {
 		index = 0;
 		index2 = 0;
@@ -43,11 +46,12 @@ public class Team extends JDialog {
 		setBounds(100, 100, 1210, 402);
 		getContentPane().setLayout(null);
 		
-			JScrollPane scrollPane = new JScrollPane();
-			JScrollPane scrollPane2 = new JScrollPane();
+			scrollPane = new JScrollPane();
+			 scrollPane2 = new JScrollPane();
 			scrollPane.setBounds(36, 82, 1089, 244);
 			getContentPane().add(scrollPane);
 			
+			//CREAZIONE TABELLA LISTA SQUADRE
 					CreaTabella(scrollPane);
 					
 					drive.PopolaTabellaTeam(table, item);
@@ -59,17 +63,20 @@ public class Team extends JDialog {
 								@Override
 								public void mouseClicked(MouseEvent arg0) {
 									
+									//SALVATAGGIO RIGA SELEZIONATA
 									index = table.getSelectedRow();
 									TableModel model = table.getModel();
 									
+									//SALVATAGGIO ID DELLA RIGA SELEZIONATA IN PRECEDENZA
 									id_squadra = model.getValueAt(index, 0).toString();
 									
+									//PASSAGGIO AL 2ND PANEL
 									scrollPane2.setBounds(36, 82, 1089, 244);
 									scrollPane.setVisible(false);
 									getContentPane().add(scrollPane2);
 									scrollPane2.setVisible(true);
 									
-									
+									//CREAZIONE LISTA GIOCATORI
 									CreaTabellaLista(scrollPane2);
 									
 									try {
@@ -84,13 +91,13 @@ public class Team extends JDialog {
 									table_2.addMouseListener(new MouseAdapter() {
 										@Override
 										public void mouseClicked(MouseEvent arg0) {
-											
+											//SALVATAGGIO RIGA SELEZIONATA
 											index2 = table_2.getSelectedRow();
 											TableModel model = table_2.getModel();
-											
+											//SALVATAGGIO ID DELLA RIGA SELEZIONATA IN PRECEDENZA
 											id_squadra = model.getValueAt(index2, 0).toString();
 											
-											
+											//MOSTRO DIALOG GIOCATORE											
 												try {
 													drive.ShowGiocatore(item, id_squadra);
 												} catch (SQLException e) {

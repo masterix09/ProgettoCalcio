@@ -32,6 +32,9 @@ public class Classifica extends JDialog {
 	private JButton btnChange;
 	private JButton CHANGE;	
 	private JTable table_1;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane2;
+	private JScrollPane scrollPane_1;
 
 	public Classifica(Driver drive, Object item){
 		setTitle("CLASSIFICA");
@@ -39,16 +42,16 @@ public class Classifica extends JDialog {
 		setBounds(100, 100, 1058, 372);
 		getContentPane().setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(27, 45, 584, 230);
 		getContentPane().add(scrollPane);
 		
 		
-		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2 = new JScrollPane();
 		scrollPane2.setBounds(69, 45, 571, 230);
 		
 		
-			
+			//CREAZIONE TABELLA CLASSIFICA SQUADRE
 		
 		CreaTabella(scrollPane);
 		
@@ -59,12 +62,14 @@ public class Classifica extends JDialog {
 		btnChange.setVisible(false);
 		btnChange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//PASSAGGIO AL 2ND PANEL
 				scrollPane2.setVisible(false);
 				btnChange.setVisible(false);
 				CHANGE.setVisible(true);
 				scrollPane.setVisible(true);
 				getContentPane().add(scrollPane);
+				
+				//CREAZIONE TABELLA CLASSIFICA MARCATORI
 				CreaTabella(scrollPane);
 				drive.PopolaTabellaClassifica(table, item);
 				scrollPane.setViewportView(table);
@@ -83,24 +88,26 @@ public class Classifica extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
-				
+				//PASSAGGIO AL 1 PANEL
 				scrollPane.setVisible(false);
 				CHANGE.setVisible(false);
 				btnChange.setVisible(true);
 				scrollPane2.setVisible(true);
 
 				getContentPane().add(scrollPane2);
-				
+				//CREAZIONE TABELLA CLASSIFICA SQUADRE
 				CreaTabellaMarcatori(scrollPane2);
 				drive.PopolaTabellaMarcatori(table, item);
 				scrollPane2.setViewportView(table);
 				
 
-				JScrollPane scrollPane_1 = new JScrollPane();
+				//CREAZIONE 3RD PANEL PER VISUALIZZARE IN CHE PARTITA HA SEGNATO 
+				scrollPane_1 = new JScrollPane();
 				scrollPane_1.setVisible(false);
 				scrollPane_1.setBounds(663, 108, 358, 192);
 				getContentPane().add(scrollPane_1);
 				
+				//CREAZIONE TABELLA VITTIME GIOCATORE
 				table_1 = new JTable();
 				table_1.setVisible(false);
 				table_1.setModel(new DefaultTableModel(
@@ -121,7 +128,7 @@ public class Classifica extends JDialog {
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
 						
-						
+						//PASSAGGIO AL 3RD PANEL CON CREAZIONE TABELLA
 						scrollPane_1.setVisible(true);
 						table_1.setVisible(true);
 						drive.PopolaTabellaListaVittimeGiocatore(table_1, table);

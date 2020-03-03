@@ -28,10 +28,16 @@ public class CampionatoHome extends JDialog {
 
 	private JPanel contentPane;
 	private Driver driver;
-	JLabel label;
+	private JLabel label;
+	private JPanel panel;
+	private JLabel label_1;
+	private JLabel label_2;
+	private JLabel label_3;
+	private JLabel label_4;
+	private JLabel label_5;
 	
 	
-	public CampionatoHome(Driver drive, Object item) {
+	public CampionatoHome(Driver drive, Object item, String user, String pass) {
 		
 		setResizable(false);
 		setTitle("CAMPIONATO HOME");
@@ -47,7 +53,7 @@ public class CampionatoHome extends JDialog {
 		
 		getContentPane().setLayout(null);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(0, 0, 717, 515);
 		
 		getContentPane().add(panel);
@@ -57,7 +63,7 @@ public class CampionatoHome extends JDialog {
 		
 		
 		
-		JLabel label_1 = new JLabel("");
+		label_1 = new JLabel("");
 		label_1.setBounds(0, 20, 209, 188);
 		panel.add(label_1);
 		label_1.addMouseListener(new MouseAdapter() {
@@ -70,12 +76,12 @@ public class CampionatoHome extends JDialog {
 			}
 		});		
 		label_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_1.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\squadre.png"));
+		label_1.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\squadre.png"));
 		
-		JLabel label_2 = new JLabel("");
+		label_2 = new JLabel("");
 		label_2.setBounds(0, 316, 242, 156);
 		panel.add(label_2);
-		label_2.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\calendarioOFF.png"));
+		label_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\calendarioOFF.png"));
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -88,7 +94,7 @@ public class CampionatoHome extends JDialog {
 		});
 		label_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		JLabel label_3 = new JLabel("");
+		 label_3 = new JLabel("");
 		label_3.setBounds(439, 36, 200, 156);
 		panel.add(label_3);
 		label_3.addMouseListener(new MouseAdapter() {
@@ -100,9 +106,11 @@ public class CampionatoHome extends JDialog {
 			}
 		});
 		label_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_3.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\CLASS.png"));
+		label_3.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\CLASS.png"));
 		
-		JLabel label_4 = new JLabel("");
+		
+		if(user.equals("admin") && pass.equals("pass")) {
+		 label_4 = new JLabel("");
 		label_4.setBounds(439, 297, 277, 175);
 		panel.add(label_4);
 		label_4.addMouseListener(new MouseAdapter() {
@@ -115,13 +123,13 @@ public class CampionatoHome extends JDialog {
 			}
 		});
 		label_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_4.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\unnamed.png"));
+		label_4.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\unnamed.png"));
 		
+		}
 		
-		
-		JLabel label_5 = new JLabel("");
+		 label_5 = new JLabel("");
 		label_5.setBounds(0, 10, 716, 504);
-		label_5.setIcon(new ImageIcon("C:\\Users\\asus512-bq039\\git\\ProgettoCalcio\\Prova\\img\\campostemma.png"));
+		label_5.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\campostemma.png"));
 		panel.add(label_5);
 		
 		

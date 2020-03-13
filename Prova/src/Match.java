@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -28,32 +29,28 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Match extends JDialog {
 	private JTable table;
 	private JTable table_1;
 	
 
-	public Match(Driver drive, Object item) {
+	public Match(Driver drive, Object item, String user, String pass) {
 		setTitle("CALENDARIO");
-		setBounds(100, 100, 1121, 461);	
+		setBounds(100, 100, 682, 569);	
 			getContentPane().setLayout(null);
-			
-			JLabel label = new JLabel("");
-			label.setBounds(31, 87, 646, 245);
 			
 			
 			LineBorder line = new LineBorder(Color.blue, 3);
-		    label.setBorder(new LineBorder(new Color(0, 0, 255), 3));
-
-			
-			getContentPane().add(label);
 			JScrollPane scrollPane_1 = new JScrollPane();
 			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(31, 87, 646, 245);
+			scrollPane.setBounds(5, 160, 646, 245);
 			getContentPane().add(scrollPane);
 			
 			CreaTabellaMatch(scrollPane);
+			
 			
 			drive.PopolaTabellaMatch(table, item);
 			
@@ -67,6 +64,33 @@ public class Match extends JDialog {
 			
 			//CHANGE BG COLOR WHEN ROW SELECTED
 			table.setSelectionBackground(new Color(248, 0, 0));
+			
+			JLabel label = new JLabel("");
+			scrollPane.setColumnHeaderView(label);
+			label.setBorder(new LineBorder(new Color(0, 0, 255), 3));
+			
+			JLabel lblLogo = new JLabel("");
+			lblLogo.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo off.png"));
+			lblLogo.setBounds(5, 0, 200, 158);
+			getContentPane().add(lblLogo);
+			
+			JLabel lblScrittaCalendario = new JLabel("SCRITTA CALENDARIO");
+			lblScrittaCalendario.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\SCRITTA CALENDARIO.png"));
+			lblScrittaCalendario.setBounds(214, 33, 431, 98);
+			getContentPane().add(lblScrittaCalendario);
+			
+			JLabel lblBack = new JLabel("BACK");
+			lblBack.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					
+					drive.ShowCampionatoDialog(item, user, pass);
+					drive.NotShowPartite();
+					
+				}
+			});
+			lblBack.setBounds(5, 421, 211, 92);
+			getContentPane().add(lblBack);
 			
 			
 			//CREATE 2ND PANEL WHEN ROW SELECTED
@@ -84,9 +108,9 @@ public class Match extends JDialog {
 					
 					//VISUALIZZAZIONE SECONDA TABELLA
 		
-					
-					scrollPane_1.setBounds(550, 87, 500, 213);
-					scrollPane.setBounds(25, 87, 500, 241);
+					setBounds(100, 100, 1135, 569);
+					scrollPane_1.setBounds(665, 160, 450, 213);
+					scrollPane.setBounds(15, 160, 646, 245);
 					label.setBounds(25, 85, 501, 246);
 					
 					
@@ -94,6 +118,7 @@ public class Match extends JDialog {
 					getContentPane().add(scrollPane_1);
 					
 					table_1 = new JTable();
+					table_1.setShowVerticalLines(false);
 					table_1.setModel(new DefaultTableModel(
 						new Object[][] {
 							{null, null, null, null, null, null},
@@ -102,6 +127,21 @@ public class Match extends JDialog {
 							"Nome", "Cognome", "Partita", "Squadra", "NMaglia", "Time"
 						}
 					));
+					
+					 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+				        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+				        table_1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+				        table_1.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+				        table_1.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+				        table_1.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+				        table_1.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+				        table_1.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+				        
+						table_1.setRowHeight(25);
+						table_1.getTableHeader().setOpaque(false);
+					
+					
 					scrollPane_1.setViewportView(table_1);
 					
 					//CHANGE COLOR, FONT HEADER 2ND JTABLE
@@ -115,6 +155,9 @@ public class Match extends JDialog {
 						
 				}
 			});
+			
+			
+			drive.NotShowCampionatoDialog();
 	}
 	
 	
@@ -123,6 +166,8 @@ public class Match extends JDialog {
 		
 		
 		table = new JTable();
+		table.setShowVerticalLines(false);
+		table.setShowVerticalLines(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},
@@ -146,6 +191,24 @@ public class Match extends JDialog {
 		table.getColumnModel().getColumn(5).setResizable(false);
 		table.getColumnModel().getColumn(6).setResizable(false);
 		
+		 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+	        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+	        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+	        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+	        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+	        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+	        table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+	        table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+	        
+			table.setRowHeight(25);
+			table.getTableHeader().setOpaque(false);
+		
+
+		    
+			
+			
 		
 		scrollPane.setViewportView(table);
 		

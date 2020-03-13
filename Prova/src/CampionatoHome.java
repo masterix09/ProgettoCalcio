@@ -70,7 +70,7 @@ public class CampionatoHome extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-				drive.ShowSquadre(item);
+				drive.ShowSquadre(item, user, pass);
 				
 				
 			}
@@ -87,7 +87,7 @@ public class CampionatoHome extends JDialog {
 			public void mouseClicked(MouseEvent e) {
 				
 				
-				drive.ShowPartite(item);
+				drive.ShowPartite(item, user, pass);
 				
 				
 			}
@@ -101,7 +101,7 @@ public class CampionatoHome extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				drive.ShowClassifica(item);
+				drive.ShowClassifica(item, user, pass);
 				
 			}
 		});

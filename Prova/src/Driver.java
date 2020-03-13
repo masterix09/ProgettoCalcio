@@ -1,3 +1,4 @@
+import java.awt.TextArea;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONException;
@@ -41,6 +43,7 @@ public class Driver {
 	private Team Team;
 	private Classifica Ranking;
 	private Login Log;
+	private Errore error;
 	private static Connection connection;
 	private ResultSet rs;
 	private Statement smnt;
@@ -48,15 +51,19 @@ public class Driver {
 	public static void main(String[] args) throws SQLException {
 		
 		Driver main = new Driver();
-		main.ShowLogin();
+		
 		
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			String connectionString="jdbc:mysql://den1.mysql1.gear.host/footballlea?user=footballlea&password=Zq10?s7AH2H!";
-			connection = DriverManager.getConnection(connectionString);		
+			connection = DriverManager.getConnection(connectionString);
+			main.ShowLogin();
 		}catch(Exception e){
-			System.out.println(e);
-		}  
+			
+			main.ShowError("ERRORE CONNESSIONE");
+		}
+		
+		
 	}  
 
 	
@@ -71,18 +78,24 @@ public class Driver {
 		Log.setVisible(true);
 	}
 	
-	public void ShowSquadre(Object item) {
-		Team = new Team(this, item);
+	
+	public void ShowError(String pane) {
+		error = new Errore(this, pane);
+		error.setVisible(true);
+	}
+	
+	public void ShowSquadre(Object item, String user, String pass) {
+		Team = new Team(this, item, user, pass);
 		Team.setVisible(true);
 	}
 	
-	public void ShowClassifica(Object item) {
-		Ranking = new Classifica(this, item);
+	public void ShowClassifica(Object item, String user, String pass) {
+		Ranking = new Classifica(this, item, user, pass);
 		Ranking.setVisible(true);
 	}
 
-	public void ShowPartite(Object item) {
-		Match = new Match(this, item);
+	public void ShowPartite(Object item, String user, String pass) {
+		Match = new Match(this, item, user, pass);
 		Match.setVisible(true);		
 	}
 
@@ -123,6 +136,10 @@ public class Driver {
 		Team.setVisible(false);
 	}
 	
+	public void NotShowError() {
+		error.setVisible(false);
+	}
+	
 	
 	public void NotShowCampionatoDialog() {
 		CampionatoDialog.setVisible(false);	
@@ -157,7 +174,7 @@ public class Driver {
 			connection = DriverManager.getConnection(connectionString);
 			
 		}catch(Exception e){
-			System.out.println(e);
+			ShowError(e.toString());
 			f = 0;
 		}  
 		
@@ -192,7 +209,7 @@ public class Driver {
 			         record.put("gf", rs.getInt("gf"));
 			         record.put("gs", rs.getInt("gs"));
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("Nome"), record.get("Punti"),record.get("vinte"),record.get("perse"), record.get("pareggio"), record.get("gf"), record.get("gs")};
+			         Object o[] = {record.get("Nome"), record.get("Punti"),record.get("vinte"),record.get("perse"),record.get("pareggio"),record.get("gf"),record.get("gs")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 				 }		
@@ -203,6 +220,7 @@ public class Driver {
 			System.out.println("Errore");
 		}
 	}
+	
 	
 	public void PopolaTabellaTeam(JTable table, Object item) {
 		int f = Connessione();
@@ -249,7 +267,7 @@ public class Driver {
 		if (f == 1) {
 			try{  
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT partita.id, partita.giornata, s.nome as Casa, s2.nome AS Ospite, partita.goal_casa AS GoalCasa, partita.goal_ospite as GoalOspite, partita.arbitro\r\n" + 
+				String Query = "SELECT partita.id, partita.giornata, s.nome as Casa, s2.nome AS Ospite, partita.goal_casa AS GoalCasa, partita.goal_ospite as GoalOspite, partita.arbitro \r\n" + 
 						"FROM partita\r\n" + 
 						"INNER JOIN squadra as s\r\n" + 
 						"ON partita.casa = s.id\r\n" + 
@@ -297,7 +315,7 @@ public class Driver {
 			try{  
 				 
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT giocatore.id, giocatore.nome, giocatore.cognome, giocatore.ngoal, giocatore.nmaglia, squadra.nome AS Squadra from giocatore INNER JOIN squadra ON giocatore.squadra = squadra.id where squadra.campionato = (SELECT id from campionato where nome = '"+item.toString()+"') order by giocatore.ngoal desc";
+				String Query = "SELECT gi.id, gi.nome ,gi.cognome, COUNT(g.player) as ngoal, gi.nmaglia, gi.squadra FROM giocatore as gi INNER JOIN goal as g ON gi.id = g.player INNER JOIN squadra as s on gi.squadra = s.id  WHERE s.campionato = (SELECT id from campionato WHERE nome = '"+item.toString()+"') GROUP BY(g.player) order by ngoal desc";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -320,8 +338,8 @@ public class Driver {
 			         record.put("id", rs.getString("id"));
 			         record.put("nome", rs.getString("nome"));
 			         record.put("cognome", rs.getString("cognome"));
-			         record.put("ngoal", rs.getInt("ngoal"));
-			         record.put("nmaglia", rs.getInt("nmaglia"));
+			         record.put("ngoal", rs.getString("ngoal"));
+			         record.put("nmaglia", rs.getString("nmaglia"));
 			         record.put("squadra", rs.getString("squadra"));
 	
 			                
@@ -373,7 +391,7 @@ public class Driver {
 			         
 			         record.put("nome", rs.getString("nome"));
 			         record.put("cognome", rs.getString("cognome"));
-			         record.put("partita", rs.getInt("partita"));
+			         record.put("partita", rs.getString("partita"));
 			         record.put("squadra", rs.getString("squadra"));
 			         record.put("nmaglia", rs.getInt("nmaglia"));
 			         record.put("time", rs.getString("time"));
@@ -386,11 +404,11 @@ public class Driver {
 				 }		
 				
 			}catch(Exception e){
-				System.out.println(e);
+				ShowError("ERRORE QUERY LISTA GOAL");
 			} 
 		
 		}else {
-			System.out.println("Errore");
+			ShowError("ERRORE CONNESSIONE AL DB");
 		}
 		
 	}
@@ -435,11 +453,11 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			 }		
 			
 		}catch(Exception e){
-			System.out.println(e);
+			ShowError("ERRORE QUERY");
 		} 
 			
 		}else {
-			System.out.println("Errore connessione");
+			ShowError("CONNESIONE NON RIUSCITA AL DB");
 		}
 		
 		
@@ -456,10 +474,9 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 				 
 				//INIZIO FORMULAZIONE QUERY
 				String Query = "SELECT giocatore.nome, giocatore.cognome, g.partita\r\n" + 
-						"FROM giocatore\r\n" + 
-						"INNER JOIN goal AS g\r\n" + 
-						"ON giocatore.id = g.player\r\n" + 
-						"where g.player = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
+						"from giocatore inner join goal as g\r\n" + 
+						"on giocatore.id = g.player\r\n" + 
+						"where giocatore.id = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -482,7 +499,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			         
 			         record.put("nome", rs.getString("nome"));
 			         record.put("cognome", rs.getString("cognome"));
-			         record.put("partita", rs.getInt("partita"));
+			         record.put("partita", rs.getString("partita"));
 			         
 	
 			                
@@ -493,11 +510,11 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 				 }		
 				
 			}catch(Exception e){
-				System.out.println(e);
+				ShowError("ERRORE QUERY");
 			} 
 		
 		}else {
-			System.out.println("Errore");
+			ShowError("ERRORE CONNESIONE AL DB");
 		}
 		
 		
@@ -603,7 +620,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 
 		    
 		}else{
-			System.out.println("Connessione al DB non riuscita");
+			ShowError("ERRORE CONNESIONE AL DB");
 		}
 	}
 	

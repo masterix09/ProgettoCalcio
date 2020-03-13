@@ -187,7 +187,7 @@ public class Driver {
 		if (f == 1) {
 			try{  
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "select  squadra.Nome, squadra.punti, squadra.vinte, squadra.pareggio, squadra.perse, squadra.gf, squadra.gs from squadra where campionato =(SELECT id from campionato where nome = '"+item.toString()+"') ORDER BY squadra.punti DESC, GF-GS ASC";
+				String Query = "select  squadra.id, squadra.Nome, squadra.vinte*3 + squadra.pareggio as Punti, squadra.vinte, squadra.pareggio, squadra.perse, (SELECT count(goal.squadra) from goal where goal.squadra = squadra.id) as GF, (SELECT count(goal.subito) from goal where goal.subito = squadra.id) as GS from squadra where campionato =(SELECT id from campionato where nome = '"+item.toString()+"') ORDER BY Punti DESC, GF-GS ASC";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	

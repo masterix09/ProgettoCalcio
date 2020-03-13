@@ -189,7 +189,8 @@ public class Classifica extends JDialog {
 		label.setBounds(223, 0, 415, 174);
 		getContentPane().add(label);
 		
-		lblBack = new JLabel("BACK");
+		lblBack = new JLabel("");
+		lblBack.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
 		lblBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

@@ -75,7 +75,8 @@ public class Team extends JDialog {
 					lblScrittaSquadre.setBounds(291, 16, 432, 185);
 					getContentPane().add(lblScrittaSquadre);
 					
-					lblBack = new JLabel("BACK");
+					lblBack = new JLabel("");
+					lblBack.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
 					lblBack.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {

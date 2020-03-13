@@ -79,7 +79,8 @@ public class Match extends JDialog {
 			lblScrittaCalendario.setBounds(214, 33, 431, 98);
 			getContentPane().add(lblScrittaCalendario);
 			
-			JLabel lblBack = new JLabel("BACK");
+			JLabel lblBack = new JLabel("");
+			lblBack.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
 			lblBack.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

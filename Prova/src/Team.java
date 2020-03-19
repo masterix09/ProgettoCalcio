@@ -66,17 +66,17 @@ public class Team extends JDialog {
 					drive.NotShowCampionatoDialog();
 					
 					JLabel lblLogo = new JLabel("\t");
-					lblLogo.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo off.png"));
+					lblLogo.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\logo off.png"));
 					lblLogo.setBounds(15, 16, 274, 185);
 					getContentPane().add(lblLogo);
 					
 					JLabel lblScrittaSquadre = new JLabel("");
-					lblScrittaSquadre.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\SCRITTA SQUADRE.png"));
+					lblScrittaSquadre.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\SCRITTA SQUADRE.png"));
 					lblScrittaSquadre.setBounds(291, 16, 432, 185);
 					getContentPane().add(lblScrittaSquadre);
 					
 					lblBack = new JLabel("");
-					lblBack.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
+					lblBack.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\back.png"));
 					lblBack.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {

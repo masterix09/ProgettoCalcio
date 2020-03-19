@@ -34,7 +34,7 @@ public class Login extends JDialog {
 		panel.setLayout(null);
 		
 		JLabel lblAdmin = new JLabel("");
-		lblAdmin.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\admin botton.png"));
+		lblAdmin.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\admin botton.png"));
 		lblAdmin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -51,7 +51,7 @@ public class Login extends JDialog {
 				lbluser = new JLabel("username:");
 				lblpass = new JLabel("password:");
 				lblLogin = new JLabel("");
-				lblLogin.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\login logo.png"));
+				lblLogin.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\guest logoff.png"));
 				lblLogin.setBounds(60, 80, 200, 125);
 				lblpass.setBounds(66, 80, 69, 20);
 				lbluser.setBounds(66, 50, 69, 20);
@@ -88,7 +88,7 @@ public class Login extends JDialog {
 		panel.add(lblAdmin);
 		
 		JLabel lblGuest = new JLabel("");
-		lblGuest.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\guest logoff.png"));
+		lblGuest.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\login logo.png"));
 		lblGuest.setBounds(53, 111, 222, 79);
 		panel.add(lblGuest);
 		

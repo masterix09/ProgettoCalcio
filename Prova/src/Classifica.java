@@ -180,17 +180,17 @@ public class Classifica extends JDialog {
 		getContentPane().add(btnsquadra);
 		
 		lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo off.png"));
+		lblLogo.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\logo off.png"));
 		lblLogo.setBounds(15, 0, 204, 174);
 		getContentPane().add(lblLogo);
 		
 		label = new JLabel("New label");
-		label.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\scritta classifica.png"));
+		label.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\scritta classifica.png"));
 		label.setBounds(223, 0, 415, 174);
 		getContentPane().add(label);
 		
 		lblBack = new JLabel("");
-		lblBack.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
+		lblBack.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\back.png"));
 		lblBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

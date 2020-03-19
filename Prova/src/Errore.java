@@ -23,7 +23,7 @@ public class Errore extends JDialog {
 		panel.setLayout(null);
 		
 		JLabel lblFoto = new JLabel("");
-		lblFoto.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\alert.png"));
+		lblFoto.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\alert.png"));
 		lblFoto.setBounds(99, 0, 185, 103);
 		panel.add(lblFoto);
 		

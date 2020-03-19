@@ -51,7 +51,7 @@ public class HomePage extends JFrame {
 		contentPane.add(comboBox);
 		
 		 lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\rsz_backgroundhome.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Pablo\\git\\ProgettoCalcio-miaCopia\\Prova\\img\\rsz_backgroundhome.png"));
 		lblNewLabel_2.setBounds(0, 0, 903, 499);
 		contentPane.add(lblNewLabel_2);
 	}

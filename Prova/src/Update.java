@@ -60,7 +60,7 @@ public class Update extends JDialog {
 					e.printStackTrace();
 				}
 		
- catch (FileNotFoundException e) {
+				catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {

@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
+
 import javax.swing.ImageIcon;
 
 public class Login extends JDialog {
@@ -31,10 +33,11 @@ public class Login extends JDialog {
 		panel2= new JPanel();
 		panel2.setBounds(30, 28, 372, 166);
 		getContentPane().add(panel);
-		panel.setLayout(null);
+		panel.setLayout(null);	
 		
 		JLabel lblAdmin = new JLabel("");
-		lblAdmin.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\admin botton.png"));
+		ImageIcon adminImage = new ImageIcon(Login.class.getResource("img/admin botton.png"));
+		lblAdmin.setIcon(adminImage);
 		lblAdmin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -51,7 +54,8 @@ public class Login extends JDialog {
 				lbluser = new JLabel("username:");
 				lblpass = new JLabel("password:");
 				lblLogin = new JLabel("");
-				lblLogin.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\login logo.png"));
+				ImageIcon LogoImage = new ImageIcon(Login.class.getResource("img/login logo.png"));
+				lblLogin.setIcon(LogoImage);
 				lblLogin.setBounds(60, 80, 200, 125);
 				lblpass.setBounds(66, 80, 69, 20);
 				lbluser.setBounds(66, 50, 69, 20);
@@ -88,7 +92,8 @@ public class Login extends JDialog {
 		panel.add(lblAdmin);
 		
 		JLabel lblGuest = new JLabel("");
-		lblGuest.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\guest logoff.png"));
+		ImageIcon GuestImage = new ImageIcon(Login.class.getResource("img/guest logoff.png"));
+		lblGuest.setIcon(GuestImage);
 		lblGuest.setBounds(53, 111, 222, 79);
 		panel.add(lblGuest);
 		

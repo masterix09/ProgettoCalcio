@@ -70,17 +70,20 @@ public class Match extends JDialog {
 			label.setBorder(new LineBorder(new Color(0, 0, 255), 3));
 			
 			JLabel lblLogo = new JLabel("");
-			lblLogo.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo off.png"));
+			ImageIcon LogoImage = new ImageIcon(Login.class.getResource("img/logo off.png"));
+			lblLogo.setIcon(LogoImage);
 			lblLogo.setBounds(5, 0, 200, 158);
 			getContentPane().add(lblLogo);
 			
 			JLabel lblScrittaCalendario = new JLabel("SCRITTA CALENDARIO");
-			lblScrittaCalendario.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\SCRITTA CALENDARIO.png"));
+			ImageIcon CalendarioImage = new ImageIcon(Login.class.getResource("img/SCRITTA CALENDARIO.png"));
+			lblScrittaCalendario.setIcon(CalendarioImage);
 			lblScrittaCalendario.setBounds(214, 33, 431, 98);
 			getContentPane().add(lblScrittaCalendario);
 			
 			JLabel lblBack = new JLabel("");
-			lblBack.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
+			ImageIcon BackImage = new ImageIcon(Login.class.getResource("img/back.png"));
+			lblBack.setIcon(BackImage);
 			lblBack.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

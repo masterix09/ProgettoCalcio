@@ -111,8 +111,8 @@ public class Driver {
 	
 	
 	
-	public void ShowGiocatore(Object item, String id_giocatore) throws SQLException {
-		Player = new Giocatore(this, item, id_giocatore);
+	public void ShowGiocatore(Object item, String id_giocatore, String user, String pass) throws SQLException {
+		Player = new Giocatore(this, item, id_giocatore, user, pass);
 		Player.setVisible(true);
 		
 	}
@@ -227,7 +227,7 @@ public class Driver {
 		if (f == 1) {
 		try{  
 			//INIZIO FORMULAZIONE QUERY
-			String Query = "select  squadra.id, squadra.Nome, squadra.presidente, allenatore.cognome AS Allenatore, squadra.Stadio from allenatore, squadra where squadra.Allenatore = allenatore.id && squadra.campionato = (SELECT id from campionato where Nome='"+item.toString()+"')";
+			String Query = "select  squadra.id, squadra.Nome, squadra.presidente, allenatore.cognome AS Allenatore, stadio.nome as Stadio from allenatore, squadra INNER JOIN stadio on squadra.Stadio = stadio.id where squadra.Allenatore = allenatore.id && squadra.campionato = (SELECT id from campionato where Nome='"+item.toString()+"')";
 			smnt = connection.createStatement();
 			rs = smnt.executeQuery( Query );
 			//FINE FORMULAZIONE QUERY	
@@ -535,8 +535,8 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			Object obj = parser.parse(new FileReader(path));
 			org.json.simple.JSONObject jsonob = (org.json.simple.JSONObject)obj;
 
-			String id="", casa="", ospite="", goal_casa="", goal_ospite="", giornata="", campionato="", arbitro="", stadio="";
-			String id_goal = "", autogol ="", time="", player="", squadra="", partita="", campionato2="";			
+			String id="", casa="", ospite="", goal_casa="", goal_ospite="", giornata="", campionato="", arbitro="", data="";
+			String id_goal = "", autogol ="", time="", player="", squadra="", partita="", campionato2="", subito="";			
 
 			
 			
@@ -548,7 +548,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		    org.json.simple.JSONObject slide = (org.json.simple.JSONObject) iterator.next();
 			
 			//INSERT INTO PARTITA
-		    String Query = "insert into partita (id, casa, ospite, goal_casa, goal_ospite, giornata, campionato, arbitro, stadio) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		    String Query = "insert into partita (id, casa, ospite, goal_casa, goal_ospite, giornata, data, campionato, arbitro) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			  PreparedStatement preparedStmt = connection.prepareStatement(Query);
 			
 			  //ESTRAPOLAZIONE DATI PARTITE
@@ -561,19 +561,21 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 	             goal_casa = (String) obje.get("goal_casa");
 	             goal_ospite = (String) obje.get("goal_ospite");
 	             giornata = (String) obje.get("giornata");
+	             data = (String) obje.get("data");
 	             campionato = (String) obje.get("campionato");
 	             arbitro = (String) obje.get("arbitro");
-	             stadio = (String) obje.get("stadio");
-	             System.out.println(id + " " + casa + " " + ospite+ " "+goal_casa+ " "+goal_ospite+ " "+giornata+" "+campionato+" "+arbitro+" "+stadio+" ");            
+	             
+	             System.out.println(id + " " + casa + " " + ospite+ " "+goal_casa+ " "+goal_ospite+ " "+giornata+" "+data+" "+campionato+" "+arbitro+" ");            
 			      preparedStmt.setString(1, id);
 			      preparedStmt.setString(2, casa);
 			      preparedStmt.setString(3, ospite);
 			      preparedStmt.setString (4, goal_casa);
 			      preparedStmt.setString(5, goal_ospite);
 			      preparedStmt.setString(6, giornata);
-			      preparedStmt.setString(7, campionato);
-			      preparedStmt.setString(8, arbitro);
-			      preparedStmt.setString(9, stadio);
+			      preparedStmt.setString(7, data);
+			      preparedStmt.setString(8, campionato);
+			      preparedStmt.setString(9, arbitro);
+			      
 			      preparedStmt.execute();
 	         }
 			
@@ -591,7 +593,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		         org.json.simple.JSONObject slide2 = (org.json.simple.JSONObject) iterator2.next();
 		         
 		   //INSERT INTO GOAL    
-		         String Query2 = "insert into goal (id, autogol, time, partita, player, squadra, campionato) values (?, ?, ?, ?, ?, ?, ?)";
+		         String Query2 = "insert into goal (id, autogol, time, partita, player, squadra, subito, campionato) values (?, ?, ?, ?, ?, ?, ?, ?)";
 		         PreparedStatement preparedStmt2 = connection.prepareStatement(Query2);
 
 		  //ESTRAPOLAZIONE DATI GOAL
@@ -604,15 +606,17 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		             partita = (String) obj2.get("partita");
 		             player = (String) obj2.get("player");
 		             squadra = (String) obj2.get("squadra");
+		             subito = (String) obj2.get("subito");
 		             campionato2 = (String) obj2.get("campionato");
-		             System.out.println(id_goal + " " + autogol + " " + time+ " "+partita+ " "+player+ " "+squadra+" "+campionato2+" ");
+		             System.out.println(id_goal + " " + autogol + " " + time+ " "+partita+ " "+player+ " "+squadra+" "+subito+" "+campionato2+" ");
 					  preparedStmt2.setString(1, id_goal);
 				      preparedStmt2.setString(2, autogol);
 				      preparedStmt2.setString(3, time);
 				      preparedStmt2.setString (4, partita);
 				      preparedStmt2.setString(5, player);
 				      preparedStmt2.setString(6, squadra);
-				      preparedStmt2.setString(7, campionato2);
+				      preparedStmt2.setString(7, subito);
+				      preparedStmt2.setString(8, campionato2);
 				      preparedStmt2.execute();
 		         }
 		      
@@ -772,7 +776,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		int f = Connessione();
 		if(f == 1) {
 			
-			String Query = "SELECT giocatore.squadra FROM giocatore INNER JOIN squadra on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
+			String Query = "SELECT squadra.nome as squadra FROM squadra INNER JOIN giocatore on giocatore.squadra = squadra.id where giocatore.id = '"+id_giocatore+"' && squadra.campionato = (SELECT id FROM campionato WHERE campionato.nome = '"+item.toString()+"')";
 			smnt = connection.createStatement();
 			rs = smnt.executeQuery( Query );
 			

@@ -66,17 +66,20 @@ public class Team extends JDialog {
 					drive.NotShowCampionatoDialog();
 					
 					JLabel lblLogo = new JLabel("\t");
-					lblLogo.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\logo off.png"));
+					ImageIcon LogoImage = new ImageIcon(Login.class.getResource("img/logo off.png"));
+					lblLogo.setIcon(LogoImage);
 					lblLogo.setBounds(15, 16, 274, 185);
 					getContentPane().add(lblLogo);
 					
 					JLabel lblScrittaSquadre = new JLabel("");
-					lblScrittaSquadre.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\SCRITTA SQUADRE.png"));
+					ImageIcon SquadreImage = new ImageIcon(Login.class.getResource("img/SCRITTA SQUADRE.png"));
+					lblScrittaSquadre.setIcon(SquadreImage);
 					lblScrittaSquadre.setBounds(291, 16, 432, 185);
 					getContentPane().add(lblScrittaSquadre);
 					
 					lblBack = new JLabel("");
-					lblBack.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\back.png"));
+					ImageIcon BackImage = new ImageIcon(Login.class.getResource("img/back.png"));
+					lblBack.setIcon(BackImage);
 					lblBack.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
@@ -132,7 +135,7 @@ public class Team extends JDialog {
 											//MOSTRO DIALOG GIOCATORE
 											
 												try {
-													drive.ShowGiocatore(item, id_squadra);
+													drive.ShowGiocatore(item, id_squadra, user, pass);
 													drive.NotShowSquadre();
 												} catch (SQLException e) {
 													// TODO Auto-generated catch block

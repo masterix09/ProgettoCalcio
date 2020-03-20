@@ -76,12 +76,14 @@ public class CampionatoHome extends JDialog {
 			}
 		});		
 		label_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_1.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\squadre.png"));
+		ImageIcon SquadreImage = new ImageIcon(Login.class.getResource("img/squadre.png"));
+		label_1.setIcon(SquadreImage);
 		
 		label_2 = new JLabel("");
 		label_2.setBounds(0, 316, 242, 156);
 		panel.add(label_2);
-		label_2.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\calendarioOFF.png"));
+		ImageIcon CalendarioImage = new ImageIcon(Login.class.getResource("img/calendarioOFF.png"));
+		label_2.setIcon(CalendarioImage);
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -106,7 +108,8 @@ public class CampionatoHome extends JDialog {
 			}
 		});
 		label_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_3.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\CLASS.png"));
+		ImageIcon ClassificaImage = new ImageIcon(Login.class.getResource("img/CLASS.png"));
+		label_3.setIcon(ClassificaImage);
 		
 		
 		if(user.equals("admin") && pass.equals("pass")) {
@@ -123,34 +126,18 @@ public class CampionatoHome extends JDialog {
 			}
 		});
 		label_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		label_4.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\unnamed.png"));
+		ImageIcon UpdateImage = new ImageIcon(Login.class.getResource("img/unnamed.png"));
+		label_4.setIcon(UpdateImage);
 		
 		}
 		
 		 label_5 = new JLabel("");
 		label_5.setBounds(0, 10, 716, 504);
-		label_5.setIcon(new ImageIcon("C:\\Users\\power\\git\\ProgettoCalcio\\Prova\\img\\campostemma.png"));
+		ImageIcon StemmaImage = new ImageIcon(Login.class.getResource("img/campostemma.png"));
+		label_5.setIcon(StemmaImage);
 		panel.add(label_5);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
-	
-	
-	
-	
 	
 }

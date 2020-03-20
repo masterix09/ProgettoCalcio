@@ -59,8 +59,7 @@ public class Driver {
 			
 			main.ShowError("ERRORE CONNESSIONE");
 		}
-		
-		
+			
 	}  
 
 	

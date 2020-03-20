@@ -71,10 +71,11 @@ public class Login extends JDialog {
 				panel2.add(lblLogin);
 				
 				
-				textpass.addKeyListener(new KeyAdapter() {
+				textpass.addKeyListener(new KeyAdapter() { 
+					//aggiungo un ascolto a tastiera quando il puntatore si trova sulla textfield password 
 					@Override
-					public void keyPressed(KeyEvent e) {
-						if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					public void keyPressed(KeyEvent e) {  
+						if(e.getKeyCode()==KeyEvent.VK_ENTER) { 
 							user = getText(textuser);
 							pass = getText(textpass);
 							System.out.println(user+" "+pass);

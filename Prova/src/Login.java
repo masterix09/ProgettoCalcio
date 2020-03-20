@@ -25,6 +25,8 @@ public class Login extends JDialog {
 	private String user = "", pass = "";
 	
 	public Login(Driver drive) {
+		
+		setTitle("LOGINNNN");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		

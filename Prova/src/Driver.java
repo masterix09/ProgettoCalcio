@@ -33,10 +33,7 @@ import com.mysql.cj.xdevapi.JsonValue;
 public class Driver {
 
 	private HomePage Home;
-	private Persona People;
 	private Giocatore Player;
-	private Stadio Stadium;
-	private Goal Gol;
 	private CampionatoHome CampionatoDialog;
 	private Update Upload;
 	private Match Match;

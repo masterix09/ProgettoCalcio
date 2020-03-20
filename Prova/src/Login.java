@@ -8,6 +8,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -26,7 +29,7 @@ public class Login extends JDialog {
 	
 	public Login(Driver drive) {
 		
-		setTitle("LOGINNNN");
+		setTitle("LOGIN");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		
@@ -66,6 +69,28 @@ public class Login extends JDialog {
 				panel2.add(lblpass);
 				panel2.add(lbluser);
 				panel2.add(lblLogin);
+				
+				
+				textpass.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+							user = getText(textuser);
+							pass = getText(textpass);
+							System.out.println(user+" "+pass);
+							if(user.equals("admin") && pass.equals("pass")) {
+							
+								drive.NotShowLogin();
+								drive.ShowHomePage(user, pass);
+								
+							}else{
+								drive.NotShowLogin();
+								drive.ShowError("CREDENZIALI ERRATE");
+					    }
+					}
+				}});
+				textpass.setBounds(130, 80, 100, 20);
+				panel2.add(textpass);
 				
 				
 				lblLogin.addMouseListener(new MouseAdapter() {

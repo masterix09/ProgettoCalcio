@@ -8,6 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="java-json.jar"/>
 	<classpathentry kind="lib" path="mysql-connector-java-8.0.19.jar"/>
-	<classpathentry kind="lib" path="C:/Users/power/git/ProgettoCalcio/Prova/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Pablo/git/ProgettoCalcio-miaCopia/Prova/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

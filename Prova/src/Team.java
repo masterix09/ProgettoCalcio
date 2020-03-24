@@ -171,14 +171,17 @@ public class Team extends JDialog {
 		table.setRowSelectionAllowed(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
+				//{null, null, null, null, null},
+				{null, null, null, null},
 			},
 			new String[] {
-				"id_Team", "Nome", "Presidente", "Allenatore", "Stadio"
+				//"id_Team", "Nome", "Presidente", "Allenatore", "Stadio"
+				"Nome", "Presidente", "Allenatore", "Stadio"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false
+				//false, false, false, false, false
+				false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -188,7 +191,7 @@ public class Team extends JDialog {
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
-		table.getColumnModel().getColumn(4).setResizable(false);
+		//table.getColumnModel().getColumn(4).setResizable(false);
 		
 		 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -197,7 +200,7 @@ public class Team extends JDialog {
 	        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-	        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+	        //table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 	        
 	        
 			table.setRowHeight(25);
@@ -221,14 +224,17 @@ public void CreaTabellaLista(JScrollPane scrollPane2) {
 		table_2.setRowSelectionAllowed(false);
 		table_2.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
+				//{null, null, null, null, null},
+				{null, null},
 			},
 			new String[] {
-				"id", "Nome", "Cognome", "Squadra"
+				//"id", "Nome", "Cognome", "Squadra"
+				"Nome", "Cognome"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false
+				//false, false, false, false, false
+				false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -236,16 +242,16 @@ public void CreaTabellaLista(JScrollPane scrollPane2) {
 		});
 		table_2.getColumnModel().getColumn(0).setResizable(false);
 		table_2.getColumnModel().getColumn(1).setResizable(false);
-		table_2.getColumnModel().getColumn(2).setResizable(false);
-		table_2.getColumnModel().getColumn(3).setResizable(false);
+		//table_2.getColumnModel().getColumn(2).setResizable(false);
+		//table_2.getColumnModel().getColumn(3).setResizable(false);
 		
 		 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
 	        table_2.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 	        table_2.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-	        table_2.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-	        table_2.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+	      //  table_2.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+	       // table_2.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 	        
 			table_2.setRowHeight(25);
 			table_2.getTableHeader().setOpaque(false);

@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -52,7 +53,7 @@ public class Login extends JDialog {
 				getContentPane().add(panel2);
 				panel2.setLayout(null);
 				
-				textpass = new JTextField("");
+				textpass = new JPasswordField("");
 				textuser = new JTextField("");
 				textuser.setBounds(130, 50, 100, 20);
 				textpass.setBounds(130, 80, 100, 20);
@@ -69,10 +70,9 @@ public class Login extends JDialog {
 				panel2.add(lblpass);
 				panel2.add(lbluser);
 				panel2.add(lblLogin);
-				
+				textuser.requestFocus();
 				
 				textpass.addKeyListener(new KeyAdapter() { 
-					//aggiungo un ascolto a tastiera quando il puntatore si trova sulla textfield password 
 					@Override
 					public void keyPressed(KeyEvent e) {  
 						if(e.getKeyCode()==KeyEvent.VK_ENTER) { 

@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -41,12 +42,17 @@ public class Team extends JDialog {
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane2;
 	private JLabel lblBack;
+    private String idsquadre[];
+    private String idgiocatori[];
+	
 	
 	public Team(Driver drive, Object item, String user, String pass) {
 		index = 0;
 		index2 = 0;
 		id_squadra = "";
 		id_giocatore = "";
+		idsquadre = new String[20];
+		idgiocatori = new String [20];
 		
 		setTitle("LISTA SQUADRE");
 		setBounds(100, 100, 787, 621);
@@ -62,7 +68,7 @@ public class Team extends JDialog {
 					
 					CreaTabella(scrollPane);
 					
-					drive.PopolaTabellaTeam(table, item);
+					drive.PopolaTabellaTeam(table, item, idsquadre);
 					drive.NotShowCampionatoDialog();
 					
 					JLabel lblLogo = new JLabel("\t");
@@ -103,8 +109,8 @@ public class Team extends JDialog {
 									TableModel model = table.getModel();
 									
 									//SALVATAGGIO ID DELLA RIGA SELEZIONATA IN PRECEDENZA
-									id_squadra = model.getValueAt(index, 0).toString();
-									
+									id_squadra = idsquadre[index];
+								
 									//PASSAGGIO AL 2ND PANEL
 									scrollPane2.setBounds(15, 203, 727, 244);
 									scrollPane.setVisible(false);
@@ -115,7 +121,7 @@ public class Team extends JDialog {
 									CreaTabellaLista(scrollPane2);
 									
 									try {
-										drive.PopolaTabellaListaGiocatore(table_2, item, id_squadra);
+										drive.PopolaTabellaListaGiocatore(table_2, item, id_squadra, idgiocatori);
 									} catch (SQLException e2) {
 										// TODO Auto-generated catch block
 										e2.printStackTrace();
@@ -130,12 +136,11 @@ public class Team extends JDialog {
 											index2 = table_2.getSelectedRow();
 											TableModel model = table_2.getModel();
 											//SALVATAGGIO ID DELLA RIGA SELEZIONATA IN PRECEDENZA
-											id_squadra = model.getValueAt(index2, 0).toString();
-											
+											 id_giocatore = idgiocatori[index2];
 											//MOSTRO DIALOG GIOCATORE
 											
 												try {
-													drive.ShowGiocatore(item, id_squadra, user, pass);
+													drive.ShowGiocatore(item, id_giocatore, user, pass);
 													drive.NotShowSquadre();
 												} catch (SQLException e) {
 													// TODO Auto-generated catch block
@@ -171,16 +176,13 @@ public class Team extends JDialog {
 		table.setRowSelectionAllowed(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				//{null, null, null, null, null},
 				{null, null, null, null},
 			},
 			new String[] {
-				//"id_Team", "Nome", "Presidente", "Allenatore", "Stadio"
 				"Nome", "Presidente", "Allenatore", "Stadio"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				//false, false, false, false, false
 				false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
@@ -191,7 +193,7 @@ public class Team extends JDialog {
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
-		//table.getColumnModel().getColumn(4).setResizable(false);
+		
 		
 		 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -200,7 +202,7 @@ public class Team extends JDialog {
 	        table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-	        //table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+	       
 	        
 	        
 			table.setRowHeight(25);
@@ -224,16 +226,13 @@ public void CreaTabellaLista(JScrollPane scrollPane2) {
 		table_2.setRowSelectionAllowed(false);
 		table_2.setModel(new DefaultTableModel(
 			new Object[][] {
-				//{null, null, null, null, null},
 				{null, null},
 			},
 			new String[] {
-				//"id", "Nome", "Cognome", "Squadra"
 				"Nome", "Cognome"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				//false, false, false, false, false
 				false, false
 			};
 			public boolean isCellEditable(int row, int column) {
@@ -242,16 +241,12 @@ public void CreaTabellaLista(JScrollPane scrollPane2) {
 		});
 		table_2.getColumnModel().getColumn(0).setResizable(false);
 		table_2.getColumnModel().getColumn(1).setResizable(false);
-		//table_2.getColumnModel().getColumn(2).setResizable(false);
-		//table_2.getColumnModel().getColumn(3).setResizable(false);
 		
 		 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
 	        table_2.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 	        table_2.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-	      //  table_2.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-	       // table_2.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 	        
 			table_2.setRowHeight(25);
 			table_2.getTableHeader().setOpaque(false);

@@ -43,6 +43,7 @@ public class Classifica extends JDialog {
 	private JLabel lblLogo;
 	private JLabel label;
 	private JLabel lblBack;
+	private String idGiocatori[];
 
 	public Classifica(Driver drive, Object item, String user, String pass){
 		setTitle("CLASSIFICA");
@@ -109,7 +110,9 @@ public class Classifica extends JDialog {
 				//CREAZIONE TABELLA CLASSIFICA MARCATORI
 				CreaTabellaMarcatori(scrollPane2);
 				
-				drive.PopolaTabellaMarcatori(table, item);
+				idGiocatori = new String[50];
+				
+				drive.PopolaTabellaMarcatori(table, item, idGiocatori);
 				scrollPane2.setViewportView(table);
 				
 
@@ -127,7 +130,7 @@ public class Classifica extends JDialog {
 						{null, null, null},
 					},
 					new String[] {
-						"Nome", "Cognome", "Partita"
+						"Giornata", "Vittima", "Tempo"
 					}
 				));
 				
@@ -165,7 +168,7 @@ public class Classifica extends JDialog {
 						btnsquadra.setBounds(653, 63, 195, 29);
 						scrollPane_1.setVisible(true);
 						table_1.setVisible(true);
-						drive.PopolaTabellaListaVittimeGiocatore(table_1, table);
+						drive.PopolaTabellaListaVittimeGiocatore(table_1, table, idGiocatori);
 						
 					}
 				});
@@ -258,10 +261,10 @@ public class Classifica extends JDialog {
 		table.setShowVerticalLines(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"ID", "NOME", "COGNOME", "NGOAL","MAGLIA", "SQUADRA"
+				"NOME", "COGNOME", "NGOAL","MAGLIA", "SQUADRA"
 			}
 		));
 		
@@ -273,7 +276,6 @@ public class Classifica extends JDialog {
 	        table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-	        table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 	        
 			table.setRowHeight(25);
 			table.getTableHeader().setOpaque(false);

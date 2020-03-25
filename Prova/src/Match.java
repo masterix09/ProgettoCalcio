@@ -35,6 +35,7 @@ import java.awt.event.MouseEvent;
 public class Match extends JDialog {
 	private JTable table;
 	private JTable table_1;
+	private String indicematch[];
 	
 
 	public Match(Driver drive, Object item, String user, String pass) {
@@ -51,8 +52,9 @@ public class Match extends JDialog {
 			
 			CreaTabellaMatch(scrollPane);
 			
+			indicematch = new String[20];
 			
-			drive.PopolaTabellaMatch(table, item);
+			drive.PopolaTabellaMatch(table, item, indicematch);
 			
 			//CHANGE COLOR, FONT HEADER 1ST JTABLE
 			JTableHeader header = table.getTableHeader();
@@ -125,10 +127,10 @@ public class Match extends JDialog {
 					table_1.setShowVerticalLines(false);
 					table_1.setModel(new DefaultTableModel(
 						new Object[][] {
-							{null, null, null, null, null, null},
+							{null, null, null, null, null},
 						},
 						new String[] {
-							"Nome", "Cognome", "Partita", "Squadra", "NMaglia", "Time"
+							"Nome", "Cognome", "Squadra", "NMaglia", "Time"
 						}
 					));
 					
@@ -140,7 +142,6 @@ public class Match extends JDialog {
 				        table_1.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 				        table_1.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 				        table_1.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-				        table_1.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 				        
 						table_1.setRowHeight(25);
 						table_1.getTableHeader().setOpaque(false);
@@ -155,7 +156,7 @@ public class Match extends JDialog {
 				    header2.setFont(new Font("Tahoma", Font.BOLD,13));
 					
 					
-					drive.PopolatabellaGoal(table_1, table);
+					drive.PopolatabellaGoal(table_1, table, indicematch);
 						
 				}
 			});
@@ -174,14 +175,14 @@ public class Match extends JDialog {
 		table.setShowVerticalLines(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"ID", "GIORNATA", "CASA", "OSPITE", "GOAL CASA", "GOAL OSPITE", "ARBITRO"
+				"GIORNATA", "CASA", "OSPITE", "GOAL CASA", "GOAL OSPITE", "ARBITRO"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false
+				false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -193,7 +194,6 @@ public class Match extends JDialog {
 		table.getColumnModel().getColumn(3).setResizable(false);
 		table.getColumnModel().getColumn(4).setResizable(false);
 		table.getColumnModel().getColumn(5).setResizable(false);
-		table.getColumnModel().getColumn(6).setResizable(false);
 		
 		 DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 	        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -204,7 +204,6 @@ public class Match extends JDialog {
 	        table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 	        table.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
-	        table.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
 	        
 			table.setRowHeight(25);
 			table.getTableHeader().setOpaque(false);

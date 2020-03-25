@@ -261,18 +261,21 @@ public class Driver {
 		
 	}
 
-	public void PopolaTabellaMatch(JTable table, Object item) {		
+	public void PopolaTabellaMatch(JTable table, Object item, String indicematch[]) {	
+		int cont = 0;
 		int f = Connessione();
 		if (f == 1) {
 			try{  
-				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT partita.id, partita.giornata, s.nome as Casa, s2.nome AS Ospite, partita.goal_casa AS GoalCasa, partita.goal_ospite as GoalOspite, partita.arbitro \r\n" + 
+
+				String Query = "SELECT partita.id, partita.giornata, s.nome as Casa, s2.nome AS Ospite, partita.goal_casa AS GoalCasa, partita.goal_ospite as GoalOspite, arbitro.cognome AS Arbitro \r\n" + 
 						"FROM partita\r\n" + 
 						"INNER JOIN squadra as s\r\n" + 
 						"ON partita.casa = s.id\r\n" + 
 						"INNER JOIN squadra as s2\r\n" + 
 						"ON partita.ospite = s2.id \r\n" + 
-						"WHERE partita.campionato = (SELECT id from campionato where nome = '"+item.toString()+"')\r\n" + 
+						"INNER JOIN arbitro\r\n" +
+						"ON partita.arbitro = arbitro.id\r\n"+
+						"WHERE partita.campionato = (SELECT id from campionato where nome = '"+item.toString()+"') \r\n" + 
 						"ORDER BY partita.giornata DESC";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
@@ -287,7 +290,7 @@ public class Driver {
 				 while(rs.next()) {
 					 JSONObject record = new JSONObject();
 			         //Inserisco i valori nel record di tipo JSONObject
-					 record.put("id", rs.getString("id"));
+					 indicematch[cont] = rs.getString("id");
 			         record.put("Casa", rs.getString("Casa"));
 			         record.put("Ospite", rs.getString("Ospite"));
 			         record.put("Giornata", rs.getString("Giornata"));
@@ -295,9 +298,11 @@ public class Driver {
 			         record.put("Gol_F", rs.getInt("GoalOspite"));
 			         record.put("Arbitro", rs.getString("Arbitro"));
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("id"), record.get("Giornata"), record.get("Casa"), record.get("Ospite"), record.get("Gol_C"), record.get("Gol_F"), record.get("Arbitro")};
+			         Object o[] = {record.get("Giornata"), record.get("Casa"), record.get("Ospite"), record.get("Gol_C"), record.get("Gol_F"), record.get("Arbitro")};
 				  //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
+			         
+			         cont ++;
 			     }
 				 connection.close();  
 			}catch(Exception e){
@@ -359,7 +364,9 @@ public class Driver {
 	}
 	
 	
-	public void PopolatabellaGoal(JTable table, JTable table2) {
+	public void PopolatabellaGoal(JTable table, JTable table2, String indicematch[]) {
+		int index;
+		index= table2.getSelectedRow();
 		
 		
 		int f = Connessione();
@@ -367,7 +374,7 @@ public class Driver {
 			try{  
 				 
 				//INIZIO FORMULAZIONE QUERY
-				String Query = "SELECT g.nome, g.cognome, goal.partita, squadra.nome as Squadra, g.nmaglia, goal.time FROM goal INNER JOIN giocatore AS g ON goal.player = g.id INNER JOIN partita AS p ON goal.partita = p.id INNER JOIN squadra ON goal.squadra = squadra.id where p.id = '"+table2.getValueAt(table2.getSelectedRow(), 0).toString()+"'";
+				String Query = "SELECT g.nome, g.cognome, squadra.nome as Squadra, g.nmaglia, goal.time FROM goal INNER JOIN giocatore AS g ON goal.player = g.id INNER JOIN partita AS p ON goal.partita = p.id INNER JOIN squadra ON goal.squadra = squadra.id where p.id = '"+indicematch[index]+"'";
 				smnt = connection.createStatement();
 				rs = smnt.executeQuery( Query );
 				//FINE FORMULAZIONE QUERY	
@@ -390,15 +397,14 @@ public class Driver {
 			         
 			         record.put("nome", rs.getString("nome"));
 			         record.put("cognome", rs.getString("cognome"));
-			         record.put("partita", rs.getString("partita"));
 			         record.put("squadra", rs.getString("squadra"));
 			         record.put("nmaglia", rs.getInt("nmaglia"));
 			         record.put("time", rs.getString("time"));
 	
 			                
 			       //CREO OGGETTO CON ALL'INTERNO INTERNO RECORD (OGGETTO DI TIPO JSON)
-			         Object o[] = {record.get("nome"), record.get("cognome"), record.get("partita"), record.get("squadra"), record.get("nmaglia"), rs.getObject("time")};
-				  //AGGIUNGO RECORD ALLA TABELLA
+   		             Object o[] = {record.get("nome"), record.get("cognome"), record.get("squadra"), record.get("nmaglia"), rs.getObject("time")};
+			         //AGGIUNGO RECORD ALLA TABELLA
 			         dtm.addRow(o);
 				 }		
 				
@@ -449,6 +455,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		         Object o[] = {record.get("nome"), record.get("cognome")};
 			  //AGGIUNGO RECORD ALLA TABELLA
 		         dtm.addRow(o);
+		         
 		         cont++;
 			 }		
 			

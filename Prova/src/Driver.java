@@ -707,7 +707,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			
 			
 		}else {
-			System.out.println("Errore connessione");
+			ShowError("Errore connessione");
 		}	
 		
 		return nome;
@@ -733,7 +733,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			
 			
 		}else {
-			System.out.println("Errore connessione");
+			ShowError("Errore connessione");
 		}	
 		
 		return cognome;
@@ -763,7 +763,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			
 			
 		}else {
-			System.out.println("Errore connessione");
+			ShowError("Errore connessione");
 		}	
 		
 		return ngoal;
@@ -789,7 +789,7 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 			
 			
 		}else {
-			System.out.println("Errore connessione");
+			ShowError("Errore connessione");
 		}	
 		
 		return squadra;
@@ -797,6 +797,86 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 	}
 	
 	
+	
+	public String NMaglia(Object item, String id_giocatore) throws SQLException {
+		String maglia = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.nmaglia from giocatore where giocatore.id = '"+id_giocatore+"'";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				//ESTRAPOLAIZONE SQUADRA
+				maglia = rs.getString("nmaglia");
+				
+			}
+			
+			
+			
+		}else {
+			ShowError("Errore connessione");
+		}	
+		
+		return maglia;
+		
+	}
+	
+	
+	
+	public String data(Object item, String id_giocatore) throws SQLException {
+		String data = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.data_nasc from giocatore where giocatore.id = '"+id_giocatore+"'";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				//ESTRAPOLAIZONE SQUADRA
+				data = rs.getString("data_nasc");
+				
+			}
+			
+			
+			
+		}else {
+			ShowError("Errore connessione");
+		}	
+		
+		return data;
+		
+	}
+	
+	
+	
+	
+	public String ruolo(Object item, String id_giocatore) throws SQLException {
+		String ruolo = null;
+		int f = Connessione();
+		if(f == 1) {
+			
+			String Query = "SELECT giocatore.Ruolo from giocatore where giocatore.id = '"+id_giocatore+"'";
+			smnt = connection.createStatement();
+			rs = smnt.executeQuery( Query );
+			
+			while(rs.next()) {
+				//ESTRAPOLAIZONE SQUADRA
+				ruolo = rs.getString("Ruolo");
+				
+			}
+			
+			
+			
+		}else {
+			ShowError("Errore connessione");
+		}	
+		
+		return ruolo;
+		
+	}
 	
 	
 }

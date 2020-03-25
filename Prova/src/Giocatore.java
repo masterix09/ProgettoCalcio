@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
+import com.sun.org.apache.xerces.internal.impl.dv.dtd.NMTOKENDatatypeValidator;
 
 import javax.swing.JLabel;
 import java.awt.event.MouseAdapter;
@@ -26,12 +26,18 @@ public class Giocatore extends JDialog {
 	private JLabel lblSquadra;
 	private JLabel lblTeam;
 	private JLabel label;
+	private JLabel lblRuolo;
+	private JLabel ruolo;
+	private JLabel lblNmaglia;
+	private JLabel numberjersey;
+	private JLabel lblData;
+	private JLabel birthday;
 
 	public Giocatore(Driver drive, Object item, String id_giocatore, String user, String pass) throws SQLException {
 		
 		
 		setTitle("DETTAGLI GIOCATORE");
-		setBounds(100, 100, 465, 323);
+		setBounds(100, 100, 472, 375);
 		getContentPane().setLayout(null);
 		
 		 lblFoto = new JLabel();
@@ -39,35 +45,61 @@ public class Giocatore extends JDialog {
 		getContentPane().add(lblFoto);
 		
 		 lblNome = new JLabel("Nome:");
-		lblNome.setBounds(211, 43, 69, 20);
+		lblNome.setBounds(211, 16, 69, 20);
 		getContentPane().add(lblNome);
 		
 		 lblName = new JLabel();
-		lblName.setBounds(295, 43, 69, 20);
+		lblName.setBounds(295, 16, 69, 20);
 		getContentPane().add(lblName);
 		
 		 lblCognome = new JLabel("Cognome:");
-		lblCognome.setBounds(211, 86, 87, 20);
+		lblCognome.setBounds(211, 65, 87, 20);
 		getContentPane().add(lblCognome);
 		
 		 lblSurname = new JLabel();
-		lblSurname.setBounds(295, 86, 69, 20);
+		lblSurname.setBounds(295, 65, 69, 20);
 		getContentPane().add(lblSurname);
 		
 		 lblNgoal = new JLabel("N\u00B0Goal:");
-		lblNgoal.setBounds(211, 139, 69, 20);
+		lblNgoal.setBounds(211, 112, 69, 20);
 		getContentPane().add(lblNgoal);
 		
 		 lblNgoal_1 = new JLabel();
-		lblNgoal_1.setBounds(295, 139, 69, 20);
+		lblNgoal_1.setBounds(295, 112, 69, 20);
 		getContentPane().add(lblNgoal_1);
 		
 		 lblSquadra = new JLabel("Squadra:");
-		lblSquadra.setBounds(211, 189, 69, 20);
+		lblSquadra.setBounds(211, 159, 69, 20);
 		getContentPane().add(lblSquadra);
 		
+
+		lblRuolo = new JLabel("Ruolo:");
+		lblRuolo.setBounds(211, 197, 69, 20);
+		getContentPane().add(lblRuolo);
+		
+		ruolo = new JLabel("");
+		ruolo.setBounds(295, 197, 69, 20);
+		getContentPane().add(ruolo);
+		
+		lblNmaglia = new JLabel("N\u00B0Maglia:");
+		lblNmaglia.setBounds(211, 233, 87, 20);
+		getContentPane().add(lblNmaglia);
+		
+		numberjersey = new JLabel("");
+		numberjersey.setBounds(305, 233, 69, 20);
+		getContentPane().add(numberjersey);
+		
+		lblData = new JLabel("Data:");
+		lblData.setBounds(211, 283, 57, 20);
+		getContentPane().add(lblData);
+		
+		birthday = new JLabel("");
+		birthday.setBounds(295, 283, 69, 20);
+		getContentPane().add(birthday);
+		
+		
 		 lblTeam = new JLabel();
-		lblTeam.setBounds(295, 189, 69, 20);
+		lblTeam.setBounds(295, 159, 69, 20);
 		getContentPane().add(lblTeam);
 		
 		 label = new JLabel("");
@@ -83,7 +115,7 @@ public class Giocatore extends JDialog {
 		 });
 		 ImageIcon BackImage = new ImageIcon(Login.class.getResource("img/back.png"));
 		 label.setIcon(BackImage);
-		label.setBounds(15, 197, 87, 70);
+		label.setBounds(15, 249, 87, 70);
 		getContentPane().add(label);
 		
 		
@@ -96,7 +128,9 @@ public class Giocatore extends JDialog {
 		lblSurname.setText(drive.Cognome(item, id_giocatore));
 		lblNgoal_1.setText(drive.NGoal(id_giocatore));
 		lblTeam.setText(drive.Squadra(item, id_giocatore));
-
+		numberjersey.setText(drive.NMaglia(item, id_giocatore));
+		ruolo.setText(drive.ruolo(item, id_giocatore));
+		birthday.setText(drive.data(item, id_giocatore));
 	}
 	
 	
@@ -105,5 +139,4 @@ public class Giocatore extends JDialog {
 		java.awt.Image im = image.getImage();
 		lblFoto.setIcon(image);
 	}
-
 }

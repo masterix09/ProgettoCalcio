@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,6 +22,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -41,10 +43,11 @@ public class Team extends JDialog {
 	private String id_giocatore;
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane2;
+	private JScrollPane scrollPane3;
 	private JLabel lblBack;
     private String idsquadre[];
     private String idgiocatori[];
-	
+	private JLabel label;
 	
 	public Team(Driver drive, Object item, String user, String pass) {
 		index = 0;
@@ -60,6 +63,7 @@ public class Team extends JDialog {
 		
 			scrollPane = new JScrollPane();
 			 scrollPane2 = new JScrollPane();
+			 scrollPane3 = new JScrollPane();
 			scrollPane.setBounds(15, 203, 727, 244);
 			getContentPane().add(scrollPane);
 			
@@ -69,7 +73,10 @@ public class Team extends JDialog {
 					CreaTabella(scrollPane);
 					
 					drive.PopolaTabellaTeam(table, item, idsquadre);
+
 					drive.NotShowCampionatoDialog();
+			
+					
 					
 					JLabel lblLogo = new JLabel("\t");
 					ImageIcon LogoImage = new ImageIcon(Login.class.getResource("img/logo off.png"));
@@ -99,11 +106,12 @@ public class Team extends JDialog {
 					
 				
 							
-							
+					
 							table.addMouseListener(new MouseAdapter() {
 								@Override
 								public void mouseClicked(MouseEvent arg0) {
 									
+								
 									//SALVATAGGIO RIGA SELEZIONATA
 									index = table.getSelectedRow();
 									TableModel model = table.getModel();
@@ -129,43 +137,19 @@ public class Team extends JDialog {
 									
 									
 									
+									
 									table_2.addMouseListener(new MouseAdapter() {
 										@Override
 										public void mouseClicked(MouseEvent arg0) {
-											//SALVATAGGIO RIGA SELEZIONATA
-											index2 = table_2.getSelectedRow();
-											TableModel model = table_2.getModel();
-											//SALVATAGGIO ID DELLA RIGA SELEZIONATA IN PRECEDENZA
-											 id_giocatore = idgiocatori[index2];
-											//MOSTRO DIALOG GIOCATORE
-											
-												try {
-													drive.ShowGiocatore(item, id_giocatore, user, pass);
-													drive.NotShowSquadre();
-												} catch (SQLException e) {
-													// TODO Auto-generated catch block
-													drive.ShowError("ERRORE CONNESSIONE");
-												}
-											
-											
+											 
+											ShowPlayer(item, user, pass, drive, table_2, pass, idgiocatori);
 											
 										}
 									});
 									
-									
 								}
 							});
 							
-							
-							
-							
-							
-							
-							
-							
-						
-					
-			
 	}
 	
 	
@@ -260,5 +244,29 @@ public void CreaTabellaLista(JScrollPane scrollPane2) {
 		
 		scrollPane2.setViewportView(table_2);
 	}
+
+
+
+public void ShowPlayer(Object item, String user, String pass, Driver drive, JTable table, String id_giocatore, String idgiocatori[]) {
 	
+	
+	 
+	//SALVATAGGIO RIGA SELEZIONATA
+	int index = table.getSelectedRow();
+	TableModel model = table.getModel();
+	//SALVATAGGIO ID DELLA RIGA SELEZIONATA IN PRECEDENZA
+	 id_giocatore = idgiocatori[index];
+	//MOSTRO DIALOG GIOCATORE
+	
+		try {
+			drive.ShowGiocatore(item, id_giocatore, user, pass);
+			drive.NotShowSquadre();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			drive.ShowError("ERRORE CONNESSIONE");
+		}
+	
+}
+
+
 }

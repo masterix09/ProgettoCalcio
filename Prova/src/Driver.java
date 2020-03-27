@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,6 +81,7 @@ public class Driver {
 		error.setVisible(true);
 	}
 	
+	
 	public void ShowSquadre(Object item, String user, String pass) {
 		Team = new Team(this, item, user, pass);
 		Team.setVisible(true);
@@ -117,6 +119,7 @@ public class Driver {
 	public void NotShowLogin() {
 		Log.setVisible(false);
 	}
+	
 	
 	
 	public void NotShowPartite() {
@@ -892,6 +895,9 @@ public void PopolaTabellaListaGiocatore(JTable table_2, Object item, String id_s
 		return ruolo;
 		
 	}
+	
+	
+
 	
 	
 }
